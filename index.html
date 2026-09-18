@@ -280,7 +280,7 @@
     .back-step-btn { background: transparent; border: 1px solid var(--panel-border); color: var(--starlight); padding: 4px 10px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
     .close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; }
 
-    /* MODAL TAB SWITCHER */
+    /* MODAL SUB-NAVIGATION */
     .modal-sub-nav { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.6); padding: 8px 16px; border-bottom: 1px solid var(--panel-border); }
     .modal-nav-tab {
       background: transparent; border: 1px solid var(--panel-border); color: var(--text-dim);
@@ -290,7 +290,7 @@
       background: rgba(56, 189, 248, 0.18); border-color: var(--starlight); color: var(--starlight);
     }
 
-    .modal-body { padding: 24px; overflow-y: auto; }
+    .modal-body { padding: 24px; overflow-y: auto; scroll-behavior: smooth; }
     .step-calendar { display: flex; flex-direction: column; align-items: center; width: 100%; }
     .step-guide { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 18px; text-align: center; }
 
@@ -299,7 +299,7 @@
     .cal-nav-btn-lg { background: transparent; border: 1px solid var(--panel-border); color: var(--starlight); padding: 6px 14px; border-radius: 6px; cursor: pointer; }
     .cal-grid-large { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
     .cal-day-label-lg { color: var(--text-dim); font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.85rem; padding-bottom: 8px; }
-    .cal-day-lg { padding: 14px 0; border-radius: 8px; cursor: pointer; font-size: 1.05rem; font-weight: 600; position: relative; background: rgba(15, 23, 42, 0.4); border: 1px solid transparent; }
+    .cal-day-lg { padding: 14px 0; border-radius: 8px; cursor: pointer; font-size: 1.05rem; font-weight: 600; position: relative; background: rgba(15, 23, 42, 0.4); border: 1px solid transparent; transition: all 0.2s ease; }
     .cal-day-lg:hover { background: rgba(56, 189, 248, 0.15); border-color: var(--starlight); }
     .cal-day-lg.active { background: var(--starlight); color: #000; font-weight: 700; }
     .cal-day-lg.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--stellar-rose); }
@@ -307,25 +307,42 @@
     /* PREVIOUS LOGS SEPARATE CALENDAR STYLING */
     .cal-day-lg.archive-has-logs {
       background: rgba(52, 211, 153, 0.15);
-      border-color: rgba(52, 211, 153, 0.4);
+      border-color: rgba(52, 211, 153, 0.45);
       color: var(--aurora-green);
     }
     .cal-day-lg.archive-has-logs:hover {
-      background: rgba(52, 211, 153, 0.28);
+      background: rgba(52, 211, 153, 0.32);
       border-color: var(--aurora-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(52, 211, 153, 0.25);
     }
     .cal-day-lg.archive-selected {
       background: var(--aurora-green) !important;
       color: #000 !important;
       font-weight: 700;
+      border-color: #fff !important;
+      box-shadow: 0 0 16px rgba(52, 211, 153, 0.5);
+    }
+    .archive-day-number {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: inline-block;
     }
     .archive-log-count-pill {
       font-family: 'Orbitron', monospace;
-      font-size: 0.6rem;
+      font-size: 0.62rem;
       color: var(--solar-amber);
       display: block;
-      margin-top: 2px;
+      margin-top: 3px;
       font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 1px 4px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+    }
+    .cal-day-lg.archive-selected .archive-log-count-pill {
+      color: #000;
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .step-editor { display: none; }
@@ -736,7 +753,7 @@
           <button class="modal-nav-tab" id="modal-tab-archive" onclick="switchModalMode('archive')">📂 PREVIOUS LOGS ARCHIVE</button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body" id="modal-body-container">
           <!-- SUB-VIEW A: STANDARD CALENDAR LOGGER -->
           <div id="modal-view-logger">
             <div class="step-calendar" id="modal-step-1">
@@ -784,7 +801,7 @@
           <!-- SUB-VIEW B: PREVIOUS LOGS SEPARATE CALENDAR -->
           <div id="modal-view-archive" style="display:none;">
             <div class="step-calendar">
-              <div class="step-guide">// CALENDAR ARCHIVE: DATES HIGHLIGHTED IN GREEN CONTAIN PRIOR LOGS</div>
+              <div class="step-guide">// TAP ANY NUMBER OR HIGHLIGHTED DAY CARD TO INSTANTLY VIEW LOGS</div>
               <div class="calendar-large">
                 <div class="cal-header-large">
                   <button class="cal-nav-btn-lg" onclick="changeArchiveMonth(-1)">&lt;</button>
@@ -795,8 +812,8 @@
               </div>
             </div>
 
-            <div style="margin-top:24px; border-top:1px solid var(--panel-border); padding-top:16px;">
-              <div class="timeline-title" id="archive-selected-header">// LOGS ON SELECTED DATE</div>
+            <div style="margin-top:28px; border-top:1px solid var(--panel-border); padding-top:16px;" id="archive-inspector-anchor">
+              <div class="timeline-title" id="archive-selected-header" style="color:var(--aurora-green); font-size:0.95rem;">// LOGS ON SELECTED DATE</div>
               <div id="archive-entries-container"></div>
             </div>
           </div>
@@ -1968,12 +1985,24 @@
 
         const el = document.createElement('div');
         el.className = `cal-day-lg ${hasLogs ? 'archive-has-logs' : ''} ${isSelected ? 'archive-selected' : ''}`;
-        el.innerHTML = `<span>${day}</span>${hasLogs ? `<span class="archive-log-count-pill">${dayLogs.length} LOG${dayLogs.length === 1 ? '' : 'S'}</span>` : ''}`;
         
+        // Wrap number and pill so clicks on any child bubble up cleanly
+        el.innerHTML = `
+          <span class="archive-day-number">${day}</span>
+          ${hasLogs ? `<span class="archive-log-count-pill">${dayLogs.length} LOG${dayLogs.length === 1 ? '' : 'S'}</span>` : ''}
+        `;
+        
+        // Single unified click handler on the entire cell
         el.onclick = () => {
           archiveSelectedDate = ds;
           renderArchiveCalendar();
           renderArchiveEntries(ds);
+          
+          // Smooth scroll to the inspect list
+          setTimeout(() => {
+            const anchor = document.getElementById('archive-inspector-anchor');
+            if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
         };
         grid.appendChild(el);
       }
@@ -1981,7 +2010,7 @@
       if (archiveSelectedDate) {
         renderArchiveEntries(archiveSelectedDate);
       } else {
-        document.getElementById('archive-entries-container').innerHTML = '<div style="color:var(--text-dim); padding:12px 0;">Select any highlighted date to inspect previous logs.</div>';
+        document.getElementById('archive-entries-container').innerHTML = '<div style="color:var(--text-dim); padding:12px 0;">Select any date above to inspect prior logs.</div>';
       }
     }
 
@@ -1989,10 +2018,11 @@
       const container = document.getElementById('archive-entries-container');
       const header = document.getElementById('archive-selected-header');
       const filtered = getAllData().filter(i => i.category === currentCategory && i.date === dateStr);
-      header.textContent = `// PREVIOUS LOGS FOR: ${dateStr} (${filtered.length} TOTAL)`;
+      
+      header.innerHTML = `// PREVIOUS LOGS FOR: <span style="color:#fff;">${dateStr}</span> <span style="color:var(--starlight);">[${filtered.length} RECORDED]</span>`;
 
       container.innerHTML = filtered.length ? filtered.map(i => `
-        <div class="entry-item">
+        <div class="entry-item" style="border-left-color: var(--aurora-green); background: rgba(15, 23, 42, 0.9);">
           <div class="entry-header">
             <div class="entry-title">${escapeHtml(i.title)}</div>
             <div class="entry-actions">
@@ -2001,9 +2031,9 @@
             </div>
           </div>
           <div class="entry-body">${i.content}</div>
-          ${i.tags ? `<div style="font-family:'Orbitron', monospace; font-size:0.65rem; color:var(--starlight); margin-top:6px;">${escapeHtml(i.tags)}</div>` : ''}
+          ${i.tags ? `<div style="font-family:'Orbitron', monospace; font-size:0.65rem; color:var(--starlight); margin-top:8px;">TAGS: ${escapeHtml(i.tags)}</div>` : ''}
         </div>
-      `).join('') : `<div style="color:var(--text-dim); padding:12px 0;">No entries recorded on ${dateStr}.</div>`;
+      `).join('') : `<div style="color:var(--text-dim); padding:12px 0;">No entries recorded on ${dateStr}. Click on dates with a green pill above to inspect.</div>`;
     }
 
     function openAndEditFromArchive(id, dateStr) {
