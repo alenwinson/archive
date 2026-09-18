@@ -378,6 +378,15 @@
     .action-btn.edit-btn:hover { border-color: var(--solar-amber); color: var(--solar-amber); }
     .action-btn.del-btn:hover { border-color: var(--stellar-rose); color: var(--stellar-rose); }
 
+    /* SCREENSHOT ATTACH BUTTONS */
+    .screenshot-attach-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .btn-screenshot-upload {
+      background: rgba(56, 189, 248, 0.12); border: 1px dashed var(--starlight); color: var(--starlight);
+      padding: 4px 10px; border-radius: 4px; font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;
+    }
+    .btn-screenshot-upload:hover { background: rgba(56, 189, 248, 0.25); border-color: #fff; color: #fff; }
+
     /* DICTIONARY LEXICON STYLING FOR WORDS LEARNED */
     .dict-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
     .dict-search-input { flex: 1; min-width: 200px; padding: 8px 12px; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 6px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; }
@@ -388,6 +397,7 @@
     .dict-word-title { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #fff; font-weight: 700; }
     .dict-word-pos { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: var(--solar-amber); letter-spacing: 1px; margin-left: 8px; text-transform: uppercase; }
     .dict-word-meaning { font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; line-height: 1.4; }
+    .dict-word-meaning img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); display: block; }
     .dict-word-tags { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--starlight); margin-top: 6px; }
 
     .footer-tools { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
@@ -770,7 +780,7 @@
 
             <div class="step-editor" id="modal-step-2">
               <div class="date-banner">
-                <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-08-17</div></div>
+                <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-09-18</div></div>
                 <button class="back-step-btn" onclick="goToStep(1)">CHANGE DATE</button>
               </div>
               <form id="entry-form" onsubmit="saveEntry(event)">
@@ -785,10 +795,18 @@
                   </div>
                   <input type="hidden" id="entry-difficulty" value="Medium" />
                 </div>
+                
                 <div class="form-group">
-                  <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshots to Cloud Storage)</label>
+                  <div class="screenshot-attach-bar">
+                    <label style="margin-bottom:0;">Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshot)</label>
+                    <div>
+                      <button type="button" class="btn-screenshot-upload" onclick="triggerConceptImageUpload()">📷 Attach / Upload Screenshot</button>
+                      <input type="file" id="concept-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'entry-content')" />
+                    </div>
+                  </div>
                   <div id="entry-content" class="rich-editor-box" contenteditable="true"></div>
                 </div>
+
                 <div class="form-group"><label>Tags</label><input type="text" id="entry-tags" placeholder="#Cardiology, #HighYield" /></div>
                 <button type="submit" id="submit-btn" class="btn-submit">LOG ENTRY TO ARCHIVE</button>
                 <button type="button" id="cancel-edit-btn" class="btn-cancel-edit" onclick="cancelEditing()">CANCEL EDIT</button>
@@ -850,8 +868,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Meaning & Clinical Context</label>
-                <textarea id="dict-meaning" style="width:100%; min-height:80px; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:6px; padding:10px; color:#fff; font-family:inherit; font-size:0.95rem; outline:none;" placeholder="Definition, derivation, or high-yield mnemonic..." required></textarea>
+                <div class="screenshot-attach-bar">
+                  <label style="margin-bottom:0;">Meaning & Clinical Context</label>
+                  <div>
+                    <button type="button" class="btn-screenshot-upload" onclick="triggerDictImageUpload()">📷 Attach / Upload Diagram</button>
+                    <input type="file" id="dict-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'dict-meaning-editor')" />
+                  </div>
+                </div>
+                <div id="dict-meaning-editor" class="rich-editor-box" contenteditable="true" style="min-height:90px;" placeholder="Definition, derivation, or high-yield mnemonic..."></div>
               </div>
               <div class="form-group">
                 <label>Tags (optional)</label>
@@ -995,7 +1019,7 @@
 
     async function waitForFirebase() {
       let tries = 0;
-      while (!window.__fbReady && tries < 60) {
+      while (!window.__fbReady && tries < 100) {
         await new Promise(r => setTimeout(r, 50));
         tries++;
       }
@@ -1309,6 +1333,7 @@
       dictEditingId = null;
       document.getElementById('dict-form').reset();
       document.getElementById('dict-entry-id').value = '';
+      document.getElementById('dict-meaning-editor').innerHTML = '';
       document.getElementById('dict-form-wrapper').style.display = 'none';
       document.getElementById('dict-toggle-form-btn').textContent = '+ ADD NEW WORD';
       document.getElementById('dict-form-header').textContent = '// DEFINE NEW WORD';
@@ -1320,18 +1345,18 @@
       e.preventDefault();
       const word = document.getElementById('dict-word').value.trim();
       const pos = document.getElementById('dict-pos').value.trim();
-      const meaning = document.getElementById('dict-meaning').value.trim();
+      const meaningHTML = document.getElementById('dict-meaning-editor').innerHTML.trim();
       const tags = document.getElementById('dict-tags').value.trim();
       let data = getAllData();
 
-      const formattedContent = pos ? `<em>(${escapeHtml(pos)})</em> ${escapeHtml(meaning)}` : escapeHtml(meaning);
+      const formattedContent = pos ? `<em>(${escapeHtml(pos)})</em> ${meaningHTML}` : meaningHTML;
 
       if (dictEditingId) {
         data = data.map(item => item.id === dictEditingId ? {
           ...item,
           title: word,
           pos: pos,
-          meaning: meaning,
+          meaning: meaningHTML,
           content: formattedContent,
           tags: tags,
           lastModified: Date.now()
@@ -1344,7 +1369,7 @@
           date: getEstDateString(),
           title: word,
           pos: pos,
-          meaning: meaning,
+          meaning: meaningHTML,
           content: formattedContent,
           tags: tags,
           lastModified: Date.now()
@@ -1365,7 +1390,7 @@
       document.getElementById('dict-entry-id').value = id;
       document.getElementById('dict-word').value = entry.title || '';
       document.getElementById('dict-pos').value = entry.pos || '';
-      document.getElementById('dict-meaning').value = entry.meaning || (entry.content ? entry.content.replace(/<[^>]*>?/gm, '') : '');
+      document.getElementById('dict-meaning-editor').innerHTML = entry.meaning || entry.content || '';
       document.getElementById('dict-tags').value = entry.tags || '';
 
       document.getElementById('dict-form-wrapper').style.display = 'block';
@@ -1414,6 +1439,62 @@
       }).join('');
     }
     /* ================== END WORDS LEARNED ================== */
+
+    /* ================== SCREENSHOT UPLOAD HELPERS ================== */
+    function triggerConceptImageUpload() {
+      const input = document.getElementById('concept-file-input');
+      if (input) input.click();
+    }
+
+    function triggerDictImageUpload() {
+      const input = document.getElementById('dict-file-input');
+      if (input) input.click();
+    }
+
+    async function handleManualImageUpload(event, targetContainerId) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const container = document.getElementById(targetContainerId);
+      if (!container) return;
+
+      // Insert placeholder
+      const placeholder = document.createElement('div');
+      placeholder.style.color = 'var(--starlight)';
+      placeholder.style.fontFamily = "'Orbitron', monospace";
+      placeholder.style.fontSize = '0.75rem';
+      placeholder.textContent = '[Uploading screenshot to cloud...]';
+      container.appendChild(placeholder);
+
+      try {
+        if (!window.__fb || !window.__fb.storage) {
+          throw new Error("Firebase Storage is not initialized.");
+        }
+        const { storage, ref, uploadBytes, getDownloadURL } = window.__fb;
+        const filename = `screenshots/${Date.now()}_${file.name || 'upload.png'}`;
+        const storageRef = ref(storage, filename);
+
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        const img = document.createElement('img');
+        img.src = downloadURL;
+        img.alt = "Cloud Screenshot";
+        img.style.maxWidth = "100%";
+        img.style.borderRadius = "6px";
+        img.style.margin = "8px 0";
+        img.style.border = "1px solid rgba(255,255,255,0.1)";
+
+        container.replaceChild(img, placeholder);
+      } catch (err) {
+        console.error("Screenshot upload failed:", err);
+        placeholder.textContent = '[Error uploading screenshot to cloud]';
+        placeholder.style.color = 'var(--stellar-rose)';
+      } finally {
+        event.target.value = ''; // Reset input so same image can be reselected if needed
+      }
+    }
+    /* ================== END SCREENSHOT HELPERS ================== */
 
     /* ================== 100 BIBLE VERSES & DAILY TOPICS ================== */
     const BIBLE_VERSES = [
@@ -1986,19 +2067,16 @@
         const el = document.createElement('div');
         el.className = `cal-day-lg ${hasLogs ? 'archive-has-logs' : ''} ${isSelected ? 'archive-selected' : ''}`;
         
-        // Wrap number and pill so clicks on any child bubble up cleanly
         el.innerHTML = `
           <span class="archive-day-number">${day}</span>
           ${hasLogs ? `<span class="archive-log-count-pill">${dayLogs.length} LOG${dayLogs.length === 1 ? '' : 'S'}</span>` : ''}
         `;
         
-        // Single unified click handler on the entire cell
         el.onclick = () => {
           archiveSelectedDate = ds;
           renderArchiveCalendar();
           renderArchiveEntries(ds);
           
-          // Smooth scroll to the inspect list
           setTimeout(() => {
             const anchor = document.getElementById('archive-inspector-anchor');
             if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2180,48 +2258,50 @@
 
     /* ================== FIREBASE STORAGE CLIPBOARD PASTE ================== */
     document.addEventListener('DOMContentLoaded', () => {
-      const editor = document.getElementById('entry-content');
-      if (editor) {
-        editor.addEventListener('paste', async function(e) {
-          const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-          for (let i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-              e.preventDefault();
-              const file = items[i].getAsFile();
-              
-              const selection = window.getSelection();
-              if (!selection.rangeCount) return;
-              const range = selection.getRangeAt(0);
-              range.deleteContents();
-              
-              const placeholderSpan = document.createElement('span');
-              placeholderSpan.style.color = 'var(--starlight)';
-              placeholderSpan.textContent = '[Uploading screenshot to cloud...]';
-              range.insertNode(placeholderSpan);
+      ['entry-content', 'dict-meaning-editor'].forEach(editorId => {
+        const editor = document.getElementById(editorId);
+        if (editor) {
+          editor.addEventListener('paste', async function(e) {
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            for (let i = 0; i < items.length; i++) {
+              if (items[i].type.indexOf('image') !== -1) {
+                e.preventDefault();
+                const file = items[i].getAsFile();
+                
+                const selection = window.getSelection();
+                if (!selection.rangeCount) return;
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                
+                const placeholderSpan = document.createElement('span');
+                placeholderSpan.style.color = 'var(--starlight)';
+                placeholderSpan.textContent = '[Uploading screenshot to cloud...]';
+                range.insertNode(placeholderSpan);
 
-              try {
-                if (!window.__fb || !window.__fb.storage) {
-                  throw new Error("Firebase Storage not ready.");
+                try {
+                  if (!window.__fb || !window.__fb.storage) {
+                    throw new Error("Firebase Storage not ready.");
+                  }
+                  const { storage, ref, uploadBytes, getDownloadURL } = window.__fb;
+                  const filename = `screenshots/${Date.now()}_${file.name || 'screenshot.png'}`;
+                  const storageRef = ref(storage, filename);
+                  const snapshot = await uploadBytes(storageRef, file);
+                  const downloadURL = await getDownloadURL(snapshot.ref);
+
+                  const imgHTML = `<img src="${downloadURL}" alt="Cloud Screenshot" style="max-width: 100%; border-radius: 6px; margin: 8px 0; border:1px solid rgba(255,255,255,0.1);" /><br>`;
+                  const tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = imgHTML;
+                  placeholderSpan.parentNode.replaceChild(tempDiv.firstChild, placeholderSpan);
+                } catch (err) {
+                  console.error("Image upload failed:", err);
+                  placeholderSpan.textContent = '[Error uploading screenshot to cloud]';
+                  placeholderSpan.style.color = 'var(--stellar-rose)';
                 }
-                const { storage, ref, uploadBytes, getDownloadURL } = window.__fb;
-                const filename = `screenshots/${Date.now()}_${file.name || 'screenshot.png'}`;
-                const storageRef = ref(storage, filename);
-                const snapshot = await uploadBytes(storageRef, file);
-                const downloadURL = await getDownloadURL(snapshot.ref);
-
-                const imgHTML = `<img src="${downloadURL}" alt="Cloud Screenshot" style="max-width: 100%; border-radius: 6px; margin: 8px 0;" /><br>`;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = imgHTML;
-                placeholderSpan.parentNode.replaceChild(tempDiv.firstChild, placeholderSpan);
-              } catch (err) {
-                console.error("Image upload failed:", err);
-                placeholderSpan.textContent = '[Error uploading screenshot to cloud]';
-                placeholderSpan.style.color = 'var(--stellar-rose)';
               }
             }
-          }
-        });
-      }
+          });
+        }
+      });
     });
 
     function exportMasterJSON() {
