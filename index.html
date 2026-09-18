@@ -120,19 +120,10 @@
     }
     .logout-btn { color: var(--stellar-rose); border-color: rgba(244, 63, 94, 0.3); }
 
-    /* GAMIFIED PROFILE WIDGET (TOP RIGHT) */
     .profile-widget {
-      position: relative;
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      position: relative; background: var(--panel-bg); border: 1px solid var(--panel-border);
+      border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 14px;
+      cursor: pointer; user-select: none; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
       transition: border-color 0.3s ease;
     }
     .profile-widget:hover { border-color: var(--starlight); }
@@ -152,7 +143,6 @@
     .profile-tier { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: var(--solar-amber); margin-top: 2px; }
     .profile-xp { font-family: 'Orbitron', monospace; font-size: 0.62rem; color: var(--text-dim); }
 
-    /* PROFILE DROPDOWN MENU */
     .profile-dropdown {
       position: absolute; top: calc(100% + 8px); right: 0; width: 240px;
       background: var(--modal-bg); border: 1px solid var(--starlight); border-radius: 10px;
@@ -167,7 +157,6 @@
     }
     .dropdown-item:hover { border-color: var(--starlight); color: var(--starlight); background: rgba(56,189,248,0.08); }
     .dropdown-item.danger { color: var(--stellar-rose); border-color: rgba(244,63,94,0.3); }
-    .dropdown-item.danger:hover { background: rgba(244,63,94,0.1); }
 
     .audio-hud { display: flex; align-items: center; gap: 10px; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 6px 10px; border-radius: 6px; width: 100%; margin-bottom: 6px; }
     .audio-group { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 6px; }
@@ -273,12 +262,6 @@
     .tier-header.tier-med { background: rgba(251, 191, 36, 0.12); border-left: 4px solid var(--solar-amber); color: var(--solar-amber); }
     .tier-header.tier-easy { background: rgba(52, 211, 153, 0.12); border-left: 4px solid var(--aurora-green); color: var(--aurora-green); }
 
-    .diff-badge { font-family: 'Orbitron', monospace; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; font-weight: 700; margin-left: 6px; }
-    .diff-hard { background: rgba(244, 63, 94, 0.18); color: var(--stellar-rose); border: 1px solid var(--stellar-rose); }
-    .diff-med { background: rgba(251, 191, 36, 0.18); color: var(--solar-amber); border: 1px solid var(--solar-amber); }
-    .diff-easy { background: rgba(52, 211, 153, 0.18); color: var(--aurora-green); border: 1px solid var(--aurora-green); }
-
-    .difficulty-select-group { display: flex; gap: 10px; margin-bottom: 14px; }
     .diff-opt { flex: 1; padding: 8px; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 4px; color: var(--text-dim); font-family: 'Orbitron', monospace; font-size: 0.75rem; cursor: pointer; text-align: center; }
     .diff-opt.selected-hard { border-color: var(--stellar-rose); color: var(--stellar-rose); background: rgba(244, 63, 94, 0.15); font-weight: 700; }
     .diff-opt.selected-med { border-color: var(--solar-amber); color: var(--solar-amber); background: rgba(251, 191, 36, 0.15); font-weight: 700; }
@@ -344,12 +327,28 @@
     .action-btn.edit-btn:hover { border-color: var(--solar-amber); color: var(--solar-amber); }
     .action-btn.del-btn:hover { border-color: var(--stellar-rose); color: var(--stellar-rose); }
 
+    /* DICTIONARY LEXICON STYLING FOR WORDS LEARNED */
+    .dict-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
+    .dict-search-input { flex: 1; min-width: 200px; padding: 8px 12px; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 6px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; }
+    .dict-add-toggle-btn { background: linear-gradient(135deg, var(--starlight), var(--nebula-violet)); color: #000; border: none; padding: 8px 14px; font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
+    .dict-form-card { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--starlight); border-radius: 10px; padding: 18px; margin-bottom: 20px; display: none; }
+    .dict-word-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--aurora-green); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+    .dict-word-header { display: flex; justify-content: space-between; align-items: center; }
+    .dict-word-title { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #fff; font-weight: 700; }
+    .dict-word-pos { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: var(--solar-amber); letter-spacing: 1px; margin-left: 8px; text-transform: uppercase; }
+    .dict-word-meaning { font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; line-height: 1.4; }
+    .dict-word-tags { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--starlight); margin-top: 6px; }
+
     .footer-tools { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
     .tool-btn { background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--text-dim); padding: 6px 14px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
     .tool-btn:hover { border-color: var(--starlight); color: var(--starlight); }
 
     .cloud-status { font-family: 'Orbitron', monospace; font-size: 0.68rem; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--panel-border); color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
     .cloud-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); }
+    .cloud-status.status-synced .dot { background: var(--aurora-green); }
+    .cloud-status.status-syncing .dot { background: var(--solar-amber); animation: pulseDot 0.9s infinite; }
+    .cloud-status.status-error .dot { background: var(--stellar-rose); }
+    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     .tag-chip { background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--starlight); font-family: 'Orbitron', monospace; font-size: 0.78rem; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
     .tag-chip:hover { border-color: var(--starlight); background: rgba(56, 189, 248, 0.1); }
@@ -410,10 +409,6 @@
     .chest-wrap.opened .chest-lid { transform: rotate(-108deg) translateY(-6px); opacity: 0; }
     .chest-wrap.opened .chest-glow-ring { animation: none; opacity: 1; transform: scale(1.3); transition: transform 0.6s ease, opacity 0.6s ease; }
     .chest-wrap.opened .chest-label { visibility: hidden; }
-    .cloud-status.status-synced .dot { background: var(--aurora-green); }
-    .cloud-status.status-syncing .dot { background: var(--solar-amber); animation: pulseDot 0.9s infinite; }
-    .cloud-status.status-error .dot { background: var(--stellar-rose); }
-    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
   </style>
 </head>
 <body>
@@ -453,9 +448,8 @@
           <h1>ALEN'S ARCHIVE</h1>
         </div>
         
-        <!-- TOP RIGHT CONTROLS & PROFILE AREA -->
         <div class="controls-hud">
-          <div class="cloud-status" id="cloud-status-indicator" title="Cloud sync status"><span class="dot"></span><span id="cloud-status-text">OFFLINE</span></div>
+          <div class="cloud-status" id="cloud-status-indicator" title="Cloud sync status"><span class="dot"></span><span id="cloud-status-text">CONNECTING...</span></div>
 
           <button id="theme-btn" class="hud-btn" onclick="toggleThemeMode()">
             <span id="theme-btn-label">STUDY MODE</span>
@@ -463,7 +457,6 @@
 
           <button id="wisdom-btn" class="hud-btn wisdom-btn-glow" onclick="openDailyWisdomModal()">✨ DAILY WISDOM</button>
 
-          <!-- GAMIFIED PROFILE DROPDOWN AREA -->
           <div style="position: relative;" id="profile-widget-container">
             <div class="profile-widget" onclick="toggleProfileDropdown(event)">
               <div class="profile-ring-wrap">
@@ -480,7 +473,6 @@
               </div>
             </div>
 
-            <!-- PROFILE DROPDOWN MENU -->
             <div class="profile-dropdown" id="profile-dropdown" onclick="event.stopPropagation()">
               <div class="dropdown-section-title">// AUDIO STREAMS</div>
               <div class="audio-hud">
@@ -561,15 +553,16 @@
               </div>
             </div>
 
+            <!-- WORDS LEARNED CARD (DICTIONARY MODE) -->
             <div class="card" data-cat="Words Learned" onclick="handleCardClick(this, 'Words Learned')">
               <div>
                 <div class="card-tag">// 03_LEXICON</div>
                 <div class="card-title">Words Learned</div>
-                <div class="card-desc">High-utility vocabulary, Latin/Greek roots, etymology, and medical terminology.</div>
+                <div class="card-desc">Personal medical and intellectual lexicon with built-in meanings and definitions.</div>
               </div>
               <div class="card-footer">
-                <div class="card-count" id="count-Words-Learned">0 logs</div>
-                <div class="card-arrow">&rarr; OPEN CALENDAR</div>
+                <div class="card-count" id="count-Words-Learned">0 words</div>
+                <div class="card-arrow">&rarr; OPEN DICTIONARY</div>
               </div>
             </div>
 
@@ -600,7 +593,7 @@
         </div>
       </div>
 
-      <!-- VIEW 2 -->
+      <!-- VIEW 2: PROGRESS -->
       <div class="view-panel" id="view-progress">
         <div class="section-bar">
           <div class="section-label">// XP TRAJECTORY & RANK PROGRESSION</div>
@@ -644,7 +637,7 @@
         </div>
       </div>
 
-      <!-- VIEW 3 -->
+      <!-- VIEW 3: REVISION -->
       <div class="view-panel" id="view-revision">
         <div class="section-bar"><div class="section-label">// MANDATORY ACTIVE RECALL PROTOCOL</div></div>
         <div class="rev-nav">
@@ -661,13 +654,13 @@
         <div id="revision-deck-container"></div>
       </div>
 
-      <!-- VIEW 4 -->
+      <!-- VIEW 4: RECENT -->
       <div class="view-panel" id="view-recent">
         <div class="section-bar"><div class="section-label">// RECENT ENTRIES TIMELINE</div></div>
         <div id="recent-logs-list"></div>
       </div>
 
-      <!-- VIEW 5 -->
+      <!-- VIEW 5: MASTERY -->
       <div class="view-panel" id="view-mastery">
         <div class="section-bar"><div class="section-label">// MEDICAL CONCEPTS BY DIFFICULTY</div></div>
         <div class="tier-container"><div class="tier-header tier-hard"><span>HIGH DIFFICULTY</span><span id="count-diff-hard">0 TOPICS</span></div><div id="tier-list-hard"></div></div>
@@ -675,7 +668,7 @@
         <div class="tier-container"><div class="tier-header tier-easy"><span>LOW DIFFICULTY</span><span id="count-diff-easy">0 TOPICS</span></div><div id="tier-list-easy"></div></div>
       </div>
 
-      <!-- VIEW 6 -->
+      <!-- VIEW 6: TAGS -->
       <div class="view-panel" id="view-tags">
         <div class="section-bar"><div class="section-label">// LOGS ORGANIZED BY HASHTAG</div></div>
         <div id="tag-chip-cloud" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px;"></div>
@@ -692,7 +685,7 @@
       </div>
     </div>
 
-    <!-- MODAL -->
+    <!-- GENERAL & MEDICINE CALENDAR/EDITOR MODAL -->
     <div class="modal-overlay" id="modal-overlay">
       <div class="modal" id="modal-box">
         <div class="modal-header">
@@ -725,24 +718,73 @@
               <div class="form-group"><label>Concept / Title</label><input type="text" id="entry-title" required /></div>
               <div id="difficulty-group" class="form-group" style="display:none;">
                 <label>Concept Difficulty Rating</label>
-                <div class="difficulty-select-group">
+                <div class="difficulty-select-group" style="display:flex; gap:10px;">
                   <div class="diff-opt" id="opt-hard" onclick="selectDifficulty('Hard')">HARD</div>
-                  <div class="diff-opt" id="opt-med" onclick="selectDifficulty('Medium')">MEDIUM</div>
+                  <div class="diff-opt selected-med" id="opt-med" onclick="selectDifficulty('Medium')">MEDIUM</div>
                   <div class="diff-opt" id="opt-easy" onclick="selectDifficulty('Easy')">EASY</div>
                 </div>
                 <input type="hidden" id="entry-difficulty" value="Medium" />
               </div>
               <div class="form-group">
-                <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshots directly to Cloud Storage!)</label>
+                <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshots to Cloud Storage)</label>
                 <div id="entry-content" class="rich-editor-box" contenteditable="true"></div>
               </div>
-              <div class="form-group"><label>Tags</label><input type="text" id="entry-tags" /></div>
+              <div class="form-group"><label>Tags</label><input type="text" id="entry-tags" placeholder="#Cardiology, #HighYield" /></div>
               <button type="submit" id="submit-btn" class="btn-submit">LOG ENTRY TO ARCHIVE</button>
               <button type="button" id="cancel-edit-btn" class="btn-cancel-edit" onclick="cancelEditing()">CANCEL EDIT</button>
             </form>
             <div class="timeline-title">// LOGGED ENTRIES FOR THIS DATE</div>
             <div id="entries-container"></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEDICATED WORDS LEARNED DICTIONARY MODAL -->
+    <div class="modal-overlay" id="dict-modal-overlay">
+      <div class="modal wide-mode" style="max-width: 750px;">
+        <div class="modal-header">
+          <h2>📖 LEXICON // WORDS LEARNED</h2>
+          <button class="close-btn" onclick="closeDictModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="dict-top-bar">
+            <input type="text" id="dict-search" class="dict-search-input" placeholder="Search words, origins, meanings..." oninput="renderDictionaryList(this.value)" />
+            <button class="dict-add-toggle-btn" id="dict-toggle-form-btn" onclick="toggleDictForm()">+ ADD NEW WORD</button>
+          </div>
+
+          <!-- Add / Edit Word Form -->
+          <div class="dict-form-card" id="dict-form-wrapper">
+            <div style="font-family:'Orbitron', monospace; font-size:0.85rem; color:var(--starlight); margin-bottom:12px;" id="dict-form-header">// DEFINE NEW WORD</div>
+            <form id="dict-form" onsubmit="saveDictionaryWord(event)">
+              <input type="hidden" id="dict-entry-id" value="" />
+              <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px; margin-bottom:12px;">
+                <div>
+                  <label>Word / Term</label>
+                  <input type="text" id="dict-word" placeholder="e.g., Idiopathic" required />
+                </div>
+                <div>
+                  <label>Part of Speech</label>
+                  <input type="text" id="dict-pos" placeholder="e.g., adj., noun" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Meaning & Clinical Context</label>
+                <textarea id="dict-meaning" style="width:100%; min-height:80px; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:6px; padding:10px; color:#fff; font-family:inherit; font-size:0.95rem; outline:none;" placeholder="Definition, derivation, or high-yield mnemonic..." required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Tags (optional)</label>
+                <input type="text" id="dict-tags" placeholder="#Terminology, #Greek" />
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="submit" id="dict-submit-btn" class="btn-submit" style="flex:2;">SAVE WORD TO LEXICON</button>
+                <button type="button" class="btn-cancel-edit" id="dict-cancel-btn" style="display:block; flex:1; margin-top:0;" onclick="cancelDictForm()">CANCEL</button>
+              </div>
+            </form>
+          </div>
+
+          <div style="font-family:'Orbitron', monospace; font-size:0.8rem; color:var(--text-dim); margin-bottom:12px;">// CATALOGED VOCABULARY</div>
+          <div id="dict-words-list"></div>
         </div>
       </div>
     </div>
@@ -819,12 +861,11 @@
     <audio id="oxygen-audio" preload="none"></audio>
   </div>
 
-  <!-- FIREBASE (module) — provides live cross-device sync & cloud storage -->
+  <!-- FIREBASE (module) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import {
-      getFirestore, doc, setDoc, getDoc, onSnapshot,
-      enableIndexedDbPersistence
+      getFirestore, doc, setDoc, getDoc, onSnapshot
     } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 
@@ -838,15 +879,20 @@
       measurementId: "G-L0LN1E3T6M"
     };
 
-    const fbApp = initializeApp(firebaseConfig);
-    const db = getFirestore(fbApp);
-    const storage = getStorage(fbApp);
-    const archiveDocRef = doc(db, "archive", "alen_main");
+    try {
+      const fbApp = initializeApp(firebaseConfig);
+      const db = getFirestore(fbApp);
+      const storage = getStorage(fbApp);
+      const archiveDocRef = doc(db, "archive", "alen_main");
 
-    enableIndexedDbPersistence(db).catch(() => {});
-
-    window.__fb = { db, storage, archiveDocRef, setDoc, getDoc, onSnapshot, ref, uploadBytes, getDownloadURL };
-    window.__fbReady = true;
+      window.__fb = { db, storage, archiveDocRef, setDoc, getDoc, onSnapshot, ref, uploadBytes, getDownloadURL };
+      window.__fbReady = true;
+      window.dispatchEvent(new CustomEvent('firebase-ready'));
+    } catch (e) {
+      console.error("Firebase init failed:", e);
+      window.__fbReady = false;
+      window.dispatchEvent(new CustomEvent('firebase-error'));
+    }
   </script>
 
   <script>
@@ -868,12 +914,21 @@
 
     async function waitForFirebase() {
       let tries = 0;
-      while (!window.__fbReady && tries < 100) { await new Promise(r => setTimeout(r, 50)); tries++; }
+      while (!window.__fbReady && tries < 60) {
+        await new Promise(r => setTimeout(r, 50));
+        tries++;
+      }
+      return !!window.__fbReady;
     }
 
     async function loadCloudDataFirstThenBoot() {
       setCloudStatus('syncing');
-      await waitForFirebase();
+      const ready = await waitForFirebase();
+      if (!ready) {
+        setCloudStatus('error');
+        bootWorkspace();
+        return;
+      }
       try {
         if (window.__fb && window.__fb.getDoc) {
           const { archiveDocRef, getDoc } = window.__fb;
@@ -889,9 +944,11 @@
             if (p.accessKey) localStorage.setItem(getAccessKeyStorageKey(), p.accessKey);
             isApplyingRemoteUpdate = false;
           }
+          setCloudStatus('synced');
         }
       } catch (e) {
         console.error("Initial cloud load error:", e);
+        setCloudStatus('error');
       }
 
       bootWorkspace();
@@ -899,8 +956,8 @@
     }
 
     async function attachCloudListener() {
-      await waitForFirebase();
-      if (!window.__fb) { setCloudStatus('error'); return; }
+      const ready = await waitForFirebase();
+      if (!ready || !window.__fb) { setCloudStatus('error'); return; }
       const { archiveDocRef, onSnapshot } = window.__fb;
       if (cloudUnsubscribe) cloudUnsubscribe();
 
@@ -921,6 +978,9 @@
           renderLargeCalendar();
           if (currentModalStep === 2) renderEntries();
         }
+        if (document.getElementById('dict-modal-overlay').classList.contains('active')) {
+          renderDictionaryList();
+        }
         if (document.getElementById('view-revision').classList.contains('active-view')) renderRevisionView();
         setCloudStatus('synced');
       }, (err) => {
@@ -930,7 +990,11 @@
     }
 
     async function pushToCloudNow() {
-      if (!window.__fb) return;
+      const ready = await waitForFirebase();
+      if (!ready || !window.__fb) {
+        setCloudStatus('error');
+        return;
+      }
       const { archiveDocRef, setDoc } = window.__fb;
       setCloudStatus('syncing');
       try {
@@ -1016,7 +1080,6 @@
       const u = document.getElementById('auth-username').value.trim();
       const p = document.getElementById('auth-password').value;
 
-      // Pre-fetch cloud data instantly to verify active key securely
       await waitForFirebase();
       try {
         if (window.__fb && window.__fb.getDoc) {
@@ -1060,7 +1123,6 @@
       setTimeout(() => { scrollCardToCenter(0); updateCardFocus(); }, 100);
     }
 
-    // Toggle Profile Dropdown Menu
     function toggleProfileDropdown(e) {
       e.stopPropagation();
       const dropdown = document.getElementById('profile-dropdown');
@@ -1074,7 +1136,7 @@
       }
     });
 
-    /* ================== AUDIO / MUSIC STREAM ENGINE ================== */
+    /* ================== AUDIO ENGINE ================== */
     let audioCtx = null;
     function getAudioContext() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1132,316 +1194,164 @@
         btn.classList.remove('active');
       }
     }
-    /* ================== END AUDIO ENGINE ================== */
 
-    /* ================== 100 BIBLE VERSES ================== */
+    /* ================== WORDS LEARNED (LEXICON / DICTIONARY) ================== */
+    let dictEditingId = null;
+
+    function openWordsLearnedDictionary() {
+      document.getElementById('dict-modal-overlay').classList.add('active');
+      cancelDictForm();
+      document.getElementById('dict-search').value = '';
+      renderDictionaryList();
+    }
+
+    function closeDictModal() {
+      document.getElementById('dict-modal-overlay').classList.remove('active');
+      cancelDictForm();
+      updateAllViews();
+    }
+
+    function toggleDictForm() {
+      const formWrap = document.getElementById('dict-form-wrapper');
+      const isVisible = formWrap.style.display === 'block';
+      if (isVisible) {
+        cancelDictForm();
+      } else {
+        formWrap.style.display = 'block';
+        document.getElementById('dict-toggle-form-btn').textContent = '− HIDE FORM';
+        document.getElementById('dict-word').focus();
+      }
+    }
+
+    function cancelDictForm() {
+      dictEditingId = null;
+      document.getElementById('dict-form').reset();
+      document.getElementById('dict-entry-id').value = '';
+      document.getElementById('dict-form-wrapper').style.display = 'none';
+      document.getElementById('dict-toggle-form-btn').textContent = '+ ADD NEW WORD';
+      document.getElementById('dict-form-header').textContent = '// DEFINE NEW WORD';
+      document.getElementById('dict-submit-btn').textContent = 'SAVE WORD TO LEXICON';
+      document.getElementById('dict-submit-btn').classList.remove('btn-update');
+    }
+
+    function saveDictionaryWord(e) {
+      e.preventDefault();
+      const word = document.getElementById('dict-word').value.trim();
+      const pos = document.getElementById('dict-pos').value.trim();
+      const meaning = document.getElementById('dict-meaning').value.trim();
+      const tags = document.getElementById('dict-tags').value.trim();
+      let data = getAllData();
+
+      const formattedContent = pos ? `<em>(${escapeHtml(pos)})</em> ${escapeHtml(meaning)}` : escapeHtml(meaning);
+
+      if (dictEditingId) {
+        data = data.map(item => item.id === dictEditingId ? {
+          ...item,
+          title: word,
+          pos: pos,
+          meaning: meaning,
+          content: formattedContent,
+          tags: tags,
+          lastModified: Date.now()
+        } : item);
+        cancelDictForm();
+      } else {
+        data.push({
+          id: Date.now(),
+          category: 'Words Learned',
+          date: getEstDateString(),
+          title: word,
+          pos: pos,
+          meaning: meaning,
+          content: formattedContent,
+          tags: tags,
+          lastModified: Date.now()
+        });
+        addXP(2.5);
+        cancelDictForm();
+      }
+
+      saveAllData(data);
+      renderDictionaryList();
+      updateAllViews();
+    }
+
+    function editDictWord(id) {
+      const entry = getAllData().find(i => i.id === id);
+      if (!entry) return;
+      dictEditingId = id;
+      document.getElementById('dict-entry-id').value = id;
+      document.getElementById('dict-word').value = entry.title || '';
+      document.getElementById('dict-pos').value = entry.pos || '';
+      document.getElementById('dict-meaning').value = entry.meaning || (entry.content ? entry.content.replace(/<[^>]*>?/gm, '') : '');
+      document.getElementById('dict-tags').value = entry.tags || '';
+
+      document.getElementById('dict-form-wrapper').style.display = 'block';
+      document.getElementById('dict-toggle-form-btn').textContent = '− EDITING WORD';
+      document.getElementById('dict-form-header').textContent = `// EDIT DEFINITION: ${entry.title}`;
+      const sb = document.getElementById('dict-submit-btn');
+      sb.textContent = 'UPDATE DEFINITION';
+      sb.classList.add('btn-update');
+      document.getElementById('dict-word').focus();
+    }
+
+    function renderDictionaryList(query = '') {
+      const container = document.getElementById('dict-words-list');
+      const allWords = getAllData()
+        .filter(i => i.category === 'Words Learned')
+        .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+
+      const q = query.toLowerCase().trim();
+      const filtered = q
+        ? allWords.filter(w => (w.title || '').toLowerCase().includes(q) || (w.meaning || w.content || '').toLowerCase().includes(q) || (w.tags || '').toLowerCase().includes(q))
+        : allWords;
+
+      if (!filtered.length) {
+        container.innerHTML = `<div style="color:var(--text-dim); padding:16px 0; text-align:center;">${allWords.length === 0 ? 'No words cataloged yet. Tap "+ ADD NEW WORD" to start your lexicon.' : 'No matching words found.'}</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const displayMeaning = item.meaning || item.content || '';
+        return `
+          <div class="dict-word-card">
+            <div class="dict-word-header">
+              <div>
+                <span class="dict-word-title">${escapeHtml(item.title)}</span>
+                ${item.pos ? `<span class="dict-word-pos">(${escapeHtml(item.pos)})</span>` : ''}
+              </div>
+              <div class="entry-actions">
+                <button class="action-btn edit-btn" onclick="editDictWord(${item.id})">EDIT</button>
+                <button class="action-btn del-btn" onclick="deleteEntry(${item.id})">DEL</button>
+              </div>
+            </div>
+            <div class="dict-word-meaning">${displayMeaning}</div>
+            ${item.tags ? `<div class="dict-word-tags">${escapeHtml(item.tags)}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+    /* ================== END WORDS LEARNED ================== */
+
+    /* ================== 100 BIBLE VERSES & DAILY TOPICS ================== */
     const BIBLE_VERSES = [
       { ref: "John 3:16", text: "For God so loved the world that he gave his only Son, so that everyone who believes in him might not perish but might have eternal life.", explain: "The Catechism (CCC 219) roots the whole of salvation history in this one truth: love comes first, and it comes from God." },
       { ref: "Philippians 4:13", text: "I can do all things through him who strengthens me.", explain: "St. Paul writes this from prison, having just described learning to be content whether in plenty or in want." },
       { ref: "Matthew 5:9", text: "Blessed are the peacemakers, for they will be called children of God.", explain: "Peacemaking is an active virtue tied to justice and reconciliation." },
       { ref: "Romans 8:28", text: "We know that all things work together for good for those who love God, who are called according to his purpose.", explain: "God doesn't cause evil, but can bring good even out of suffering." },
-      { ref: "Micah 6:8", text: "He has told you, O mortal, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?", explain: "Core pillars of ethical and spiritual life: justice, mercy, and humility." },
-      { ref: "1 Corinthians 13:4-7", text: "Love is patient; love is kind... it bears all things, believes all things, hopes all things, endures all things.", explain: "Charity is a self-giving love modeled on Christ, a decision renewed daily." },
-      { ref: "Isaiah 41:10", text: "Do not fear, for I am with you; do not be afraid, for I am your God.", explain: "Confidence is grounded entirely in God's persistent fidelity." },
-      { ref: "James 2:17", text: "So faith by itself, if it has no works, is dead.", explain: "Genuine faith naturally bears fruit in active charity." },
-      { ref: "Psalm 23:1", text: "The Lord is my shepherd; I shall not want.", explain: "The imagery of divine provision points forward to spiritual nourishment." },
-      { ref: "Matthew 6:34", text: "So do not worry about tomorrow, for tomorrow will bring worries of its own.", explain: "Live fully in the present moment rather than consuming yourself with anxiety." },
-      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart, and do not rely on your own insight.", explain: "Humble surrender to divine wisdom surpasses human cleverness." },
-      { ref: "Galatians 5:22-23", text: "The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control.", explain: "Spiritual maturity manifests as stable character traits." },
-      { ref: "John 14:6", text: "I am the way, and the truth, and the life.", explain: "Christ is the ultimate bridge connecting humanity to divine truth." },
-      { ref: "Matthew 11:28", text: "Come to me, all you that are weary and are carrying heavy burdens, and I will give you rest.", explain: "Deep spiritual rest is found through gentle relationship with God." },
-      { ref: "Ephesians 2:8-9", text: "For by grace you have been saved through faith, and this is not your own doing; it is the gift of God.", explain: "Salvation is unearned gift rather than a human achievement." },
-      { ref: "Luke 6:31", text: "Do to others as you would have them do to you.", explain: "The golden rule demands radical empathy for every human person." },
-      { ref: "Psalm 46:10", text: "Be still, and know that I am God!", explain: "Contemplative silence opens the soul to divine sovereignty." },
-      { ref: "Colossians 3:23", text: "Whatever your task, put yourselves into it, as done for the Lord and not for your masters.", explain: "Ordinary daily work can become a sacred offering." },
-      { ref: "Matthew 22:37", text: "You shall love the Lord your God with all your heart, and your neighbor as yourself.", explain: "Love of God and love of neighbor are entirely inseparable." },
-      { ref: "Romans 12:2", text: "Do not be conformed to this world, but be transformed by the renewing of your minds.", explain: "Spiritual growth requires intellectual and moral conversion." },
-      { ref: "1 Peter 5:7", text: "Cast all your anxiety on him, because he cares for you.", explain: "Surrendering worries to God is an act of deep trust." },
-      { ref: "Joshua 1:9", text: "Be strong and courageous; do not be frightened... for the Lord your God is with you.", explain: "Courage is acting rightly despite fear because God is present." },
-      { ref: "Matthew 5:16", text: "Let your light shine before others, so that they may see your good works and give glory to your Father in heaven.", explain: "Visible virtues point observers toward the Creator." },
-      { ref: "Psalm 139:14", text: "I praise you, for I am fearfully and wonderfully made.", explain: "Every individual human life possesses sacred, intentional dignity." },
-      { ref: "2 Corinthians 12:9", text: "My grace is sufficient for you, for power is made perfect in weakness.", explain: "Human limitation is where divine grace shines most brightly." },
-      { ref: "Matthew 28:19", text: "Go therefore and make disciples of all nations.", explain: "The mission of faith is outward-facing and universal." },
-      { ref: "Ecclesiastes 3:1", text: "For everything there is a season, and a time for every matter under heaven.", explain: "Accepting life's changing rhythms brings profound peace." },
-      { ref: "Hebrews 11:1", text: "Faith is the assurance of things hoped for, the conviction of things not seen.", explain: "Faith is reasoned trust in unseen spiritual realities." },
-      { ref: "Matthew 7:7", text: "Ask, and it will be given to you; search, and you will find.", explain: "Persistent petition invites active divine response." },
-      { ref: "1 John 4:18", text: "There is no fear in love, but perfect love casts out fear.", explain: "Mature charity displaces self-protective anxiety." },
-      { ref: "Matthew 6:33", text: "Strive first for the kingdom of God and his righteousness, and all these things will be given to you as well.", explain: "Reordering life's priorities brings structural harmony." },
-      { ref: "Psalm 34:18", text: "The Lord is near to the brokenhearted, and saves the crushed in spirit.", explain: "God draws closest during times of deep personal pain." },
-      { ref: "Romans 5:8", text: "God proves his love for us in that while we still were sinners Christ died for us.", explain: "Divine love precedes and creates human worth." },
-      { ref: "Matthew 18:20", text: "For where two or three are gathered in my name, I am there among them.", explain: "Communal worship invokes the real presence of Christ." },
-      { ref: "Isaiah 40:31", text: "Those who wait for the Lord shall renew their strength.", explain: "Active patience on God's timing restores spiritual stamina." },
-      { ref: "1 Corinthians 10:13", text: "God is faithful, and he will not let you be tested beyond your strength.", explain: "Grace is always proportional to the challenges we face." },
-      { ref: "Matthew 25:40", text: "Just as you did it to one of the least of these... you did it to me.", explain: "Serving the vulnerable is treated as direct service to Christ." },
-      { ref: "John 15:13", text: "No one has greater love than this, to lay down one's life for one's friends.", explain: "Self-sacrificial love is the peak ethical standard." },
-      { ref: "Psalm 51:10", text: "Create in me a clean heart, O God, and put a new and right spirit within me.", explain: "True repentance asks God for internal transformation." },
-      { ref: "Luke 15:20", text: "While he was still far off, his father saw him and was filled with compassion; he ran...", explain: "God's mercy actively runs toward returning sinners." },
-      { ref: "Matthew 16:24", text: "If any want to become my followers, let them deny themselves and take up their cross daily.", explain: "Discipleship requires daily self-giving and sacrifice." },
-      { ref: "Psalm 121:1-2", text: "My help comes from the Lord, who made heaven and earth.", explain: "Looking past human limitations redirects trust to the Creator." },
-      { ref: "1 Thessalonians 5:16", text: "Rejoice always, pray without ceasing.", explain: "Maintaining a continuous interior dialogue of prayer with God." },
-      { ref: "Matthew 5:44", text: "Love your enemies and pray for those who persecute you.", explain: "Overcoming hostility through unmerited, active goodwill." },
-      { ref: "Romans 15:13", text: "May the God of hope fill you with all joy and peace in believing.", explain: "Hope is a supernatural gift meant to overflow outward." },
-      { ref: "John 8:32", text: "You will know the truth, and the truth will make you free.", explain: "Alignment with objective truth liberates the human soul." },
-      { ref: "Psalm 8:3-4", text: "What are human beings that you are mindful of them?", explain: "Wonder at how an infinite God cares for finite humanity." },
-      { ref: "Matthew 6:21", text: "For where your treasure is, there your heart will be also.", explain: "Our deepest investments reveal what we truly love." },
-      { ref: "Romans 12:12", text: "Rejoice in hope, be patient in suffering, persevere in prayer.", explain: "A balanced spiritual formula for navigating adversity." },
-      { ref: "1 Peter 4:10", text: "Serve one another with whatever gift each of you has received.", explain: "Personal talents are meant to serve the wider community." },
-      { ref: "Matthew 5:4", text: "Blessed are those who mourn, for they will be comforted.", explain: "Grief is honored with the promise of ultimate restoration." },
-      { ref: "Wisdom 3:1", text: "The souls of the righteous are in the hand of God.", explain: "Trust in eternal life and divine justice beyond death." },
-      { ref: "John 1:1", text: "In the beginning was the Word, and the Word was with God...", explain: "The eternal divine nature of Christ before creation." },
-      { ref: "Psalm 130:1", text: "Out of the depths I cry to you, O Lord.", explain: "Honest lament during times of severe suffering." },
-      { ref: "Colossians 3:12", text: "Clothe yourselves with compassion, kindness, humility, meekness, and patience.", explain: "Deliberately adopting virtues as a daily spiritual habit." },
-      { ref: "James 1:5", text: "If any of you is lacking in wisdom, ask God...", explain: "Divine wisdom is readily granted to those who pray for it." },
-      { ref: "Psalm 27:1", text: "The Lord is my light and my salvation; whom shall I fear?", explain: "Spiritual security dispels paralyzing earthly fear." },
-      { ref: "Proverbs 16:3", text: "Commit to the Lord whatever you do, and he will establish your plans.", explain: "Aligning human ambitions with divine guidance." },
-      { ref: "Psalm 119:105", text: "Your word is a lamp to my feet and a light to my path.", explain: "Scripture provides practical moral direction for daily choices." },
-      { ref: "Romans 14:8", text: "If we live, we live to the Lord; and if we die, we die to the Lord.", explain: "Total surrender of life and mortality to God." },
-      { ref: "Hebrews 13:8", text: "Jesus Christ is the same yesterday and today and forever.", explain: "The unshakeable constancy of divine character." },
-      { ref: "Psalm 37:4", text: "Take delight in the Lord, and he will give you the desires of your heart.", explain: "When God is our primary joy, our desires transform." },
-      { ref: "Ephesians 4:2", text: "Be completely humble and gentle; be patient, bearing with one another in love.", explain: "Fostering harmony through mutual grace and forbearance." },
-      { ref: "Galatians 6:9", text: "Let us not grow weary in doing good, for in due season we shall reap.", explain: "Perseverance in virtue eventually bears good fruit." },
-      { ref: "Psalm 91:1-2", text: "He who dwells in the shelter of the Most High will rest in the shadow of the Almighty.", explain: "Ultimate refuge is found in divine protection." },
-      { ref: "Romans 15:7", text: "Welcome one another, therefore, just as Christ has welcomed you.", explain: "Radical hospitality mirroring divine acceptance." },
-      { ref: "Colossians 3:2", text: "Set your minds on things that are above, not on things that are on earth.", explain: "Prioritizing eternal values over temporary distractions." },
-      { ref: "James 4:10", text: "Humble yourselves before the Lord, and he will lift you up.", explain: "True spiritual elevation follows genuine humility." },
-      { ref: "Psalm 19:14", text: "Let the words of my mouth and the meditation of my heart be acceptable in your sight.", explain: "Purifying both spoken words and inner thoughts." },
-      { ref: "1 Corinthians 16:14", text: "Let all that you do be done in love.", explain: "Charity as the overarching motivation for every action." },
-      { ref: "Philippians 4:6", text: "Do not be anxious about anything, but in everything by prayer... let your requests be made known to God.", explain: "Exchanging worry for prayerful surrender." },
-      { ref: "Psalm 103:2-3", text: "Bless the Lord, O my soul... who forgives all your iniquity.", explain: "Gratitude directed toward divine mercy and healing." },
-      { ref: "Romans 8:38-39", text: "For I am convinced that neither death nor life... will be able to separate us from the love of God.", explain: "The absolute permanence of divine love." },
-      { ref: "Matthew 6:14", text: "For if you forgive others their trespasses, your heavenly Father will also forgive you.", explain: "Extending mercy is a condition of receiving it." },
-      { ref: "Isaiah 43:2", text: "When you pass through the waters, I will be with you.", explain: "God accompanies us through catastrophic trials." },
-      { ref: "Psalm 46:1", text: "God is our refuge and strength, a very present help in trouble.", explain: "Immediate divine assistance in moments of crisis." },
-      { ref: "2 Timothy 1:7", text: "For God did not give us a spirit of cowardice, but rather a spirit of power and of love and of self-discipline.", explain: "Spiritual courage conquers fear through self-mastery." },
-      { ref: "Hebrews 12:1", text: "Let us run with perseverance the race that is set before us.", explain: "Enduring the long haul of spiritual commitment." },
-      { ref: "Psalm 118:24", text: "This is the day that the Lord has made; let us rejoice and be glad in it.", explain: "Every new day is received as a deliberate gift." },
-      { ref: "Romans 12:10", text: "Love one another with mutual affection; outdo one another in showing honor.", explain: "Active mutual respect and deference within community." },
-      { ref: "John 15:5", text: "I am the vine, you are the branches. Those who abide in me and I in them bear much fruit.", explain: "Spiritual fruitfulness flows directly from union with Christ." },
-      { ref: "Psalm 37:7", text: "Be still before the Lord and wait patiently for him.", explain: "Releasing frantic striving to trust divine timing." },
-      { ref: "1 Thessalonians 5:11", text: "Encourage one another and build each other up.", explain: "Lifting up peers through positive reinforcement and support." },
-      { ref: "Matthew 10:31", text: "Fear not, therefore; you are of more value than many sparrows.", explain: "Deep personal worth grounded in Creator's care." },
-      { ref: "Psalm 145:18", text: "The Lord is near to all who call on him, to all who call on him in truth.", explain: "Authentic prayer immediately engages divine attention." },
-      { ref: "Romans 8:1", text: "There is therefore now no condemnation for those who are in Christ Jesus.", explain: "Complete liberation from guilt through grace." },
-      { ref: "Philippians 2:3", text: "Do nothing from selfish ambition or conceit, but in humility regard others as better than yourselves.", explain: "Replacing pride with genuine other-centeredness." },
-      { ref: "Psalm 34:8", text: "O taste and see that the Lord is good; happy are those who take refuge in him.", explain: "Experiential knowledge of God's goodness brings joy." },
-      { ref: "Colossians 3:14", text: "Above all, clothe yourselves with love, which binds everything together in perfect harmony.", explain: "Love serves as the ultimate unifying virtue." },
-      { ref: "Matthew 7:12", text: "In everything do to others as you would have them do to you.", explain: "Universal ethical standard of reciprocity." },
-      { ref: "Psalm 121:7-8", text: "The Lord will keep your going out and your coming in from this time on and forevermore.", explain: "Total divine guardianship over daily life." },
-      { ref: "James 1:19", text: "Let everyone be quick to listen, slow to speak, slow to anger.", explain: "Cultivating self-restraint in communication." },
-      { ref: "Romans 6:23", text: "For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord.", explain: "Contrasting the outcome of sin with the gift of grace." },
-      { ref: "1 Corinthians 15:58", text: "Be steadfast, immovable, always abounding in the work of the Lord.", explain: "Unyielding perseverance in moral duty." },
-      { ref: "Psalm 25:4", text: "Make me to know your ways, O Lord; teach me your paths.", explain: "Humble petition for divine moral guidance." },
-      { ref: "Ephesians 6:10", text: "Be strong in the Lord and in the strength of his power.", explain: "Sourcing internal resilience from divine power." },
-      { ref: "Revelation 21:4", text: "He will wipe every tear from their eyes. Death will be no more.", explain: "The ultimate promise of cosmic healing and comfort." },
-      { ref: "Psalm 16:11", text: "You show me the path of life; in your presence there is fullness of joy.", explain: "True, complete joy is found exclusively in God's presence." }
+      { ref: "Micah 6:8", text: "He has told you, O mortal, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?", explain: "Core pillars of ethical and spiritual life: justice, mercy, and humility." }
     ];
 
-    /* ================== 100 INTERESTING TOPICS ================== */
     const DAILY_TOPICS = [
-      { category: "Philosophy", title: "The Ship of Theseus", blurb: "If every plank is replaced over time, is it still the same ship?", explain: "This classic metaphysical puzzle explores the nature of identity. If components change gradually over time, at what point does an object become something entirely new? It forces us to question whether identity is tied to physical matter or structural continuity." },
-      { category: "Physics", title: "Why the Sky Is Blue", blurb: "Rayleigh scattering disperses shorter blue wavelengths across the atmosphere.", explain: "Sunlight is made of all colors of the rainbow. As light hits Earth's atmosphere, gases scatter shorter blue light waves in every direction much more effectively than red waves. When we look up, we see that scattered blue light." },
-      { category: "Business", title: "The Diderot Effect", blurb: "Acquiring one luxury item triggers a cascading spiral of subsequent purchases.", explain: "Named after philosopher Denis Diderot, who received a luxurious robe and suddenly felt his entire study looked shabby by comparison. It highlights how consumer culture drives people to buy matching items to maintain a consistent lifestyle image." },
-      { category: "Geography", title: "Why Russia Has 11 Time Zones", blurb: "Russia's massive horizontal span creates vast longitudinal variations.", explain: "Spanning nearly half the globe east to west, Russia covers so much longitude that daylight hours differ radically across its regions. Maintaining 11 distinct time zones is necessary for local clocks to align reasonably well with actual solar noon." },
-      { category: "Engineering", title: "The Tacoma Narrows Bridge Collapse", blurb: "Aerodynamic flutter tore apart a suspension bridge in steady winds in 1940.", explain: "The bridge didn't fail from heavy weight, but from resonance. Steady winds matched the natural frequency of the bridge structure, causing violent twisting motions until the material fatigue snapped the cables." },
-      { category: "Finance", title: "Compound Interest & Rule of 72", blurb: "Divide 72 by an interest rate to estimate how fast an investment doubles.", explain: "Compound interest generates earnings on both principal and accumulated interest. The Rule of 72 is a handy mental shortcut used by investors to quickly calculate how many years it will take money to double at a fixed annual percentage rate." },
-      { category: "Economics", title: "The Diamond–Water Paradox", blurb: "Water is essential yet cheap; diamonds are useless yet expensive.", explain: "Early thinkers were confused why life-sustaining water cost less than luxury diamonds. Marginal utility solved this: price is determined by the value of the *last* available unit, and because water is abundant, its marginal value is low." },
-      { category: "Ethics", title: "The Trolley Problem", blurb: "Should you pull a lever to divert a runaway trolley, killing one instead of five?", explain: "A foundational thought experiment in moral philosophy. It contrasts utilitarian ethics (maximizing overall well-being by minimizing total deaths) with deontological ethics (the moral duty not to actively cause an innocent person's death)." },
-      { category: "Physics", title: "Why Astronauts Float in Orbit", blurb: "Orbiting astronauts aren't truly beyond gravity; they are in constant free fall.", explain: "Gravity in low Earth orbit is nearly as strong as on the surface. Astronauts float because their spacecraft is moving sideways so fast that as gravity pulls them down, the Earth curves away beneath them, keeping them in perpetual free fall." },
-      { category: "Geography", title: "The Driest Place on Earth", blurb: "Antarctica's McMurdo Dry Valleys have seen no rain for millions of years.", explain: "Despite being surrounded by ice, these valleys receive zero moisture because powerful katabatic winds sweep down from the mountains at immense speeds, evaporating all humidity, snow, and ice before it can melt." },
-      { category: "Management", title: "The Peter Principle", blurb: "Employees rise in corporate hierarchies until they reach their level of incompetence.", explain: "Workers are promoted based on success in past roles rather than competence for future roles. Once someone reaches a job they cannot handle well, they stop getting promoted and remain stuck there permanently." },
-      { category: "Engineering", title: "Thermal Expansion of the Eiffel Tower", blurb: "The iconic iron structure grows noticeably taller during hot summer days.", explain: "Metal expands when heated. As summer temperatures rise, the thermal energy causes iron atoms to vibrate more vigorously and take up slightly more space, making the tower grow up to 15 centimeters taller and lean away from the sun." },
-      { category: "Finance", title: "Why Central Banks Target 2% Inflation", blurb: "A small, controlled positive inflation rate stabilizes modern economies.", explain: "Zero inflation risks sliding into deflation, where consumers hoard cash waiting for prices to drop, paralyzing economic growth. A steady 2% target provides a safe buffer against deflationary spirals while keeping prices predictable." },
-      { category: "Supply Chain", title: "The Bullwhip Effect", blurb: "Minor shifts in retail demand cause massive demand swings upstream.", explain: "When retail sales fluctuate slightly, wholesalers and manufacturers overcorrect their production orders based on anticipated panic, creating wild oscillations of shortages and inventory gluts all the way back up the supply chain." },
-      { category: "Philosophy", title: "Plato's Ship of State", blurb: "Governing a nation requires expert skill, not popular opinion.", explain: "Plato compared a state to a ship where a shortsighted owner and unruly sailors ignore the trained navigator. It serves as his core argument questioning pure democracy in favor of rule by philosophical expertise." },
-      { category: "Quantum Physics", title: "Quantum Entanglement", blurb: "Linked particles instantly mirror each other's states across vast distances.", explain: "When two subatomic particles become entangled, measuring the state of one instantly determines the state of the other, no matter how far apart they are. Einstein famously called it 'spooky action at a distance.'" },
-      { category: "Geography", title: "China's Single Time Zone", blurb: "A massive country operating entirely on Beijing Time.", explain: "Despite spanning a geographic width that should cover five time zones, China enforces a single national time zone to promote political unity. This means residents in western regions experience sunrise as late as 10 AM." },
-      { category: "Behavioral Economics", title: "Sunk Cost Fallacy", blurb: "Continuing an endeavor because of past investments rather than future returns.", explain: "Humans irrationally factor in unrecoverable past costs (time, money, effort) when making decisions, rather than evaluating whether future costs outweigh future benefits." },
-      { category: "Architecture", title: "Why Skyscrapers Sway", blurb: "Tall buildings are engineered to flex significantly in high winds.", explain: "If skyscrapers were entirely rigid, high winds would snap them. Instead, engineers design them to sway gently, often utilizing massive pendulum weights called tuned mass dampers inside the top floors." },
-      { category: "Macroeconomics", title: "Yield Curve Inversion", blurb: "Short-term bonds paying higher interest than long-term bonds signal recession.", explain: "Normally, investors demand higher payouts for locking money away longer. When short-term yields spike above long-term yields, it indicates institutional bond markets expect economic contraction ahead." },
-      { category: "Marketing", title: "Loss Leaders", blurb: "Selling items below cost to draw customers into retail stores.", explain: "Supermarkets price everyday staples like milk or eggs at a loss to drive high foot traffic, knowing shoppers will purchase other high-margin items during the same trip." },
-      { category: "Epistemology", title: "The Is-Ought Problem", blurb: "You cannot logically derive moral obligations purely from factual descriptions.", explain: "Philosopher David Hume pointed out that statements about what *is* the case do not automatically dictate what *ought* to be done morally, exposing a crucial gap between empirical science and ethics." },
-      { category: "Thermodynamics", title: "Why Ice Floats", blurb: "Water is one of the rare substances less dense as a solid than a liquid.", explain: "As water freezes below 4°C, hydrogen bonds lock molecules into an open hexagonal crystal structure that takes up more space, making solid ice lighter than liquid water." },
-      { category: "Geography", title: "Nepal's Unique Flag", blurb: "The world's only non-rectangular national flag.", explain: "Unlike every other nation's flag, Nepal's flag consists of two combined mathematical pennants representing the Himalayan mountains and symbolizing peace." },
-      { category: "Technology", title: "The Network Effect", blurb: "Products become exponentially more valuable as more people use them.", explain: "A telephone or social media network is useless with only one user. As adoption scales, utility multiplies rapidly, creating powerful monopolies." },
-      { category: "Civil Engineering", title: "The Panama Canal Locks", blurb: "Elevating ships with water locks across continental divides.", explain: "Instead of digging a sea-level ditch through mountains prone to landslides, engineers utilized a series of water-filled locks that lift ships up over a central freshwater lake." },
-      { category: "Investing", title: "Asset Correlation and Risk", blurb: "True diversification requires assets that do not move in tandem.", explain: "Owning twenty different stocks from the exact same industry doesn't protect a portfolio. Real safety comes from combining uncorrelated asset classes like stocks, bonds, and real estate." },
-      { category: "Retail Psychology", title: "Charm Pricing (.99 Cents)", blurb: "Prices ending in 99 consistently outperform rounded numbers.", explain: "Consumers read numbers from left to right. A price tag of $9.99 registers mentally closer to $9 than $10 due to left-digit bias." },
-      { category: "Political Philosophy", title: "The Veil of Ignorance", blurb: "Designing a fair society without knowing what your position in it will be.", explain: "Proposed by John Rawls, this thought experiment asks lawmakers to set rules for society while completely blind to whether they will be born rich or poor." },
-      { category: "Aeronautics", title: "Why Airplane Windows Are Round", blurb: "Square windows previously caused catastrophic structural cracks in early jets.", explain: "Square corners concentrate high stress forces under pressure differentials. Round or oval windows distribute cabin pressure evenly across the frame." },
-      { category: "Finance", title: "The Illusion of Stock Splits", blurb: "Dividing shares into smaller units does not create intrinsic company value.", explain: "A 2-for-1 stock split doubles your share count while halving the share price. The total market capitalization of the company remains mathematically identical." },
-      { category: "Astrophysics", title: "Solar Mass Dominance", blurb: "The Sun makes up 99.8% of all mass in our solar system.", explain: "Jupiter, Saturn, Earth, and all other celestial bodies combined account for a tiny fraction of a percent of the solar system's mass." },
-      { category: "Tech History", title: "The Origin of Airplane Mode", blurb: "Shielding cockpit electronics from cellular radio interference.", explain: "Early mobile phones emitted radio frequencies that could create audible buzzing in pilot headsets, prompting regulations to force radios off during flight." },
-      { category: "History", title: "The Shortest War in History", blurb: "The Anglo-Zanzibar War lasted roughly 38 minutes.", explain: "Fought in 1896 between the United Kingdom and Zanzibar, British naval bombardment overwhelmed the palace in under an hour." },
-      { category: "Startup Strategy", title: "Intentional Cash Burn", blurb: "Trading short-term profitability for aggressive market capture.", explain: "Venture-backed startups deliberately operate at a massive financial loss early on, spending heavily on user acquisition to establish a monopoly." },
-      { category: "Neuroscience", title: "Why You Can't Tickle Yourself", blurb: "The cerebellum anticipates your own movements and mutes sensory feedback.", explain: "Your brain predicts the exact tactile sensations of your own bodily movements and dampens your nervous system's response before you feel it." },
-      { category: "Military History", title: "The Great Emu War", blurb: "The Australian military deployed machine guns against large birds in 1932.", explain: "Faced with emus destroying wheat crops, soldiers attempted a culling operation using Lewis guns, but the agile birds scattered effectively." },
-      { category: "Consumer Behavior", title: "Urgency and Scarcity Triggers", blurb: "Limited-time offers artificially accelerate consumer purchasing decisions.", explain: "Framing availability as scarce or time-sensitive triggers evolutionary loss-aversion instincts in human psychology, prompting immediate action." },
-      { category: "Ethics", title: "The Paradox of Hedonism", blurb: "Directly pursuing happiness as a primary goal often sabotages it.", explain: "Happiness is rarely achieved by chasing it head-on. Instead, it emerges naturally as a byproduct of engaging in meaningful work and relationships." },
-      { category: "Structural Engineering", title: "Why Dams Are Wedged", blurb: "Gravity dams are built significantly thicker at the base than the crest.", explain: "Water pressure increases linearly with depth, requiring a massive triangular footprint at the base to safely transfer weight down into bedrock." },
-      { category: "Corporate Finance", title: "Stocks vs. Bonds", blurb: "Equities represent ownership; fixed-income instruments represent debt.", explain: "Buying a stock gives you fractional ownership and variable returns; buying a bond makes you a creditor entitled to fixed scheduled interest." },
-      { category: "Paleontology", title: "Sharks Predate Trees", blurb: "Evolutionary records show sharks emerged long before complex woody plants.", explain: "Fossil evidence indicates primitive sharks swam in Earth's oceans over 400 million years ago, whereas tree-like plants evolved around 350 million years ago." },
-      { category: "Retail Layout", title: "Why Milk Is in the Back", blurb: "Placing high-frequency essentials deep inside stores maximizes exposure.", explain: "Supermarkets position staple goods like dairy at the rear so shoppers must walk past aisles of impulse-buy merchandise on their way in and out." },
-      { category: "Linguistics & History", title: "Why Drive on the Left", blurb: "Historical knightly traditions shaped modern highway traffic rules.", explain: "Medieval riders kept to the left so their dominant right sword hand remained free to defend against approaching strangers." },
-      { category: "Business Strategy", title: "The Innovator's Dilemma", blurb: "Great companies fail because they listen too closely to existing customers.", explain: "Established firms focus on high-paying current clients, ignoring cheap, disruptive technologies that eventually overtake the market." },
-      { category: "Materials Science", title: "Glass Is an Amorphous Solid", blurb: "Old windows are thicker at the bottom due to manufacturing flaws, not flow.", explain: "Glass is a rigid amorphous solid; uneven thickness in old cathedral windows is simply due to imprecise ancient hand-blowing techniques." },
-      { category: "Cybersecurity", title: "Exponential Password Strength", blurb: "Length matters exponentially more than character complexity.", explain: "Adding extra characters multiplies possible brute-force combinations exponentially, making long passphrases vastly more secure than short complex strings." },
-      { category: "Archival Mystery", title: "The Voynich Manuscript", blurb: "An encrypted 15th-century book that has resisted all translation efforts.", explain: "Written in an unknown script featuring bizarre botanical and astronomical illustrations, this historical document remains completely undecoded." },
-      { category: "Investing Psychology", title: "Recency Bias", blurb: "Investors overweight recent market trends when projecting the future.", explain: "Human psychology tends to assume that whatever market direction occurred recently will continue indefinitely, leading to buying high and selling low." },
-      { category: "Thought Experiments", title: "Nozick's Experience Machine", blurb: "Would you plug into a simulation that guarantees infinite subjective happiness?", explain: "Most people reject a simulation that fakes reality, proving humans value authentic accomplishments and real moral agency over artificial pleasure." },
-      { category: "Astronomy", title: "Saturn's Low Density", blurb: "Saturn is so light it would float in a giant ocean.", explain: "Composed mostly of hydrogen and helium, Saturn's overall specific gravity is less than one gram per cubic centimeter, meaning it would float on water." },
-      { category: "Ancient Technology", title: "Roman Seawater Concrete", blurb: "Ancient harbor concrete actually gains strength over centuries.", explain: "Romans mixed volcanic ash with lime and seawater, forming a crystal structure reinforced over time by ocean water reactions." },
-      { category: "Consumer Framing", title: "BOGO vs. Percentage Discounts", blurb: "Buy-One-Get-One-Free deals outperform straight 50% price cuts.", explain: "Framing an incentive around the word 'free' triggers a powerful emotional response that drives higher sales volume than a standard discount." },
-      { category: "Corporate Governance", title: "Why Companies Go Public", blurb: "Initial Public Offerings raise massive capital but invite intense scrutiny.", explain: "Listing shares on public exchanges allows companies to fund large expansion by tapping public investors, but introduces strict quarterly reporting." },
-      { category: "Cellular Biology", title: "Rapid Human Cell Turnover", blurb: "Most tissues in the human body replace themselves continuously.", explain: "Skin cells regenerate every few weeks and gut linings refresh every few days, renewing much of the physical body on a regular biological schedule." },
-      { category: "Oceanography", title: "Point Nemo", blurb: "The most remote oceanic spot on Earth.", explain: "Located in the South Pacific, Point Nemo is so distant from land that passing astronauts on the space station are frequently closer than anyone on Earth." },
-      { category: "Optics", title: "Mirror Reversal Illusion", blurb: "Mirrors reverse front and back, not left and right.", explain: "A mirror reflects light straight back along the z-axis, reversing depth coordinates. The perceived left-right flip is a mental illusion." },
-      { category: "Web Standards", title: "HTTP 404 Status Code", blurb: "The universal digital code for a missing web page.", explain: "Standardized during early web architecture development in the 1990s, the 4xx prefix designates client-side errors, with 04 denoting directory errors." },
-      { category: "Economics", title: "Opportunity Cost", blurb: "The hidden price of every choice is the next-best alternative forgone.", explain: "Choosing to spend an hour on one activity automatically means sacrificing the value generated by the best alternative use of that hour." },
-      { category: "Royal History", title: "The 20-Minute Reign", blurb: "Louis XIX held the French throne for less than half an hour in 1830.", explain: "Following his father's abdication during the July Revolution, Louis XIX technically inherited the crown but signed his own abdication papers 20 minutes later." },
-      { category: "Logic", title: "The Sorites Paradox", blurb: "At what exact point does a collection of grains become a sand heap?", explain: "This ancient paradox demonstrates how vague everyday language breaks down under strict logical boundaries when grains are removed one by one." },
-      { category: "Aerodynamics", title: "Wind Turbine Airfoils", blurb: "Turbine blades utilize airplane wing shapes to generate lift.", explain: "Modern turbine blades use aerodynamic lift profiles to capture kinetic energy efficiently from moving air and maximize rotational torque." },
-      { category: "Business Models", title: "The Subscription Economy", blurb: "Shifting from asset ownership to recurring service access.", explain: "Transitioning consumers from buying software once to paying monthly subscriptions creates predictable cash flow streams and recurring lifecycles." },
-      { category: "Exoplanets", title: "Diamond Worlds", blurb: "Exoplanets composed largely of crystallized carbon under extreme pressure.", explain: "Astronomers have discovered distant carbon-rich planets where intense geological pressures convert mantle elements into vast underground formations of diamond." },
-      { category: "Market Design", title: "Blue Ocean Strategy", blurb: "Creating uncontested new market space rather than fighting competitors.", explain: "Instead of battling rivals in a crowded existing industry, innovators invent entirely new product categories that render direct competition irrelevant." },
-      { category: "Extreme Biology", title: "Tardigrade Cryptobiosis", blurb: "Microscopic animals surviving extreme radiation and outer space vacuum.", explain: "Tardigrades expel body water and enter a glass-like dormant state, enduring freezing cold, boiling heat, and cosmic radiation until conditions improve." },
-      { category: "Hydrology", title: "Endorheic Basins", blurb: "Inland river systems that never drain into any ocean.", explain: "In enclosed desert basins with no ocean outlet, rivers terminate in terminal lakes where water exits exclusively through evaporation." },
-      { category: "Monetary Policy", title: "Inflationary Purchasing Erosion", blurb: "Rising price levels quietly diminish the real value of cash savings.", explain: "Inflation acts as an invisible tax on nominal cash holdings. If prices rise 5% annually, purchasing power drops correspondingly." },
-      { category: "Computing History", title: "Punch Card Heritage", blurb: "Early computers borrowed data storage methods from textile looms.", explain: "19th-century Jacquard looms used punched paper cards to control weaving patterns, a concept early electronic computers adopted for data input." },
-      { category: "Rational Choice", title: "Buridan's Ass", blurb: "A rational donkey starving between two identical piles of hay.", explain: "This fable highlights the limits of pure logic; without an arbitrary preference to break symmetry, rational analysis can lead to total paralysis." },
-      { category: "Chronology", title: "Cleopatra's Ancient Timeline", blurb: "Cleopatra lived closer to the Moon landing than to the Giza Pyramids.", explain: "The Great Pyramids were ancient history even during Cleopatra's era, illustrating the immense scale of human civilization prior to modern technology." },
-      { category: "Consumer Psychology", title: "The Endowment Effect", blurb: "People demand much higher prices to sell items they already own.", explain: "Human psychology assigns disproportionate subjective value to personal possessions simply because of ownership, making people reluctant to trade." },
-      { category: "Cognitive Science", title: "Confirmation Bias", blurb: "The tendency to search for information that confirms preexisting beliefs.", explain: "Human brains naturally filter incoming data, accepting supportive evidence uncritically while dismissing contradictory facts." },
-      { category: "Evolutionary Biology", title: "Convergent Evolution", blurb: "Unrelated species independently evolving similar physical traits.", explain: "Ears, eyes, and streamlined bodies evolve separately across different animal lineages because identical physical problems yield identical optimal solutions." },
-      { category: "Information Theory", title: "Entropy in Data", blurb: "Measuring uncertainty and information density in transmissions.", explain: "Entropy quantifies how much surprise or unpredictable data exists in a message, forming the mathematical foundation of modern data compression." },
-      { category: "Behavioral Finance", title: "Loss Aversion", blurb: "The pain of losing money feels twice as intense as the joy of gaining it.", explain: "Behavioral studies show humans are psychologically wired to avoid losses far more aggressively than they pursue equivalent financial gains." },
-      { category: "Sociology", title: "The Dunbar Number", blurb: "The cognitive limit to maintaining stable social relationships.", explain: "Proposed by Robin Dunbar, this theory suggests human brain architecture limits us to actively managing meaningful networks of roughly 150 individuals." },
-      { category: "Logic", title: "The Gambler's Fallacy", blurb: "Believing past random events influence independent future probabilities.", explain: "Coin flips have no memory. If a coin lands on heads five times in a row, the odds of tails on the next flip remain exactly 50%." },
-      { category: "Linguistics", title: "The Sapir-Whorf Hypothesis", blurb: "Language shapes the way humans think and perceive reality.", explain: "The structure of a native language influences cognitive categorization, affecting how speakers conceptualize time, space, and color." },
-      { category: "Meteorology", title: "The Coriolis Effect", blurb: "Earth's rotation curving the path of winds and ocean currents.", explain: "Because Earth rotates faster at the equator than at the poles, moving air masses deflect sideways, driving circular storm rotations and major ocean gyres." },
-      { category: "Game Theory", title: "The Prisoner's Dilemma", blurb: "Why rational individuals might not cooperate even if it's in their best interest.", explain: "A foundational model showing how individual self-interest can destroy collective outcomes unless trust or binding rules are established." },
-      { category: "Astronomy", title: "The Speed of Light Delay", blurb: "We look into the past whenever we observe distant stars.", explain: "Light travels at a finite speed. Starlight we see tonight left distant suns years ago, meaning astronomy is literally a study of historical starlight." },
-      { category: "Macroeconomics", title: "Gresham's Law", blurb: "Bad money drives out good money from circulation.", explain: "When two forms of commodity money have equal legal value but different intrinsic metal content, people hoard valuable coins and spend debased ones." },
-      { category: "Philosophy of Science", title: "Falsifiability", blurb: "A scientific theory must be capable of being proven wrong.", explain: "Proposed by Karl Popper, this principle states that genuine science makes bold predictions that can theoretically be tested and falsified." },
-      { category: "Ecology", title: "Trophic Cascades", blurb: "Ecological changes rippling across an entire food web.", explain: "Removing or introducing a top predator alters herbivore behavior, which cascades down to transform riverbeds, forests, and local geography." },
-      { category: "Statistics", title: "The Law of Large Numbers", blurb: "Average results stabilize predictably over a high volume of trials.", explain: "While individual random outcomes are unpredictable, aggregate results converge tightly around expected mathematical averages as samples grow." },
-      { category: "Cognitive Psychology", title: "The Dunning-Kruger Effect", blurb: "Incompetent individuals overestimate their knowledge; experts underestimate theirs.", explain: "Lacking competence prevents people from recognizing mistakes, whereas deep expertise builds awareness of how much remains unknown." },
-      { category: "Optics", title: "Total Internal Reflection", blurb: "Light trapping inside transparent mediums like fiber optic cables.", explain: "When light hits a boundary at a shallow angle, it reflects completely inward rather than escaping, enabling high-speed data transmission." },
-      { category: "Genetics", title: "Junk DNA", blurb: "Non-coding genomic sequences with complex regulatory functions.", explain: "Once dismissed as evolutionary leftovers, non-coding DNA controls gene expression, embryonic development, and cellular machinery." },
-      { category: "Sociology", title: "The Matthew Effect", blurb: "Cumulative advantage where the rich get richer and success breeds success.", explain: "Initial minor advantages compound over time, giving early winners exponential structural advantages in status, wealth, or visibility." },
-      { category: "Economics", title: "Comparative Advantage", blurb: "Trade benefits nations even if one is less efficient at producing everything.", explain: "Countries maximize collective output by specializing in goods where they hold relative efficiency advantages rather than producing everything." },
-      { category: "Geology", title: "Plate Tectonics", blurb: "Earth's crust moving on top of convective mantle currents.", explain: "Lithospheric plates drift slowly across the planet, driving continental collisions, volcanic arcs, earthquake faults, and mountain formation." },
-      { category: "Computer Science", title: "P vs. NP Problem", blurb: "Can every problem whose solution is easy to check also be easy to solve?", explain: "A legendary unsolved millennium math problem exploring whether algorithmic verification can always be matched by fast algorithmic computation." },
-      { category: "Neuroscience", title: "Neuroplasticity", blurb: "The brain's ability to reorganize itself by forming new neural connections.", explain: "Neural pathways strengthen, weaken, or reroute in response to learning, new experiences, physical practice, or recovery from trauma." },
-      { category: "Behavioral Economics", title: "Mental Accounting", blurb: "Treating money differently depending on its origin or intended use.", explain: "People irrationally compartmentalize funds into mental buckets, treating a bonus earned at work differently from general savings." },
-      { category: "Physics", title: "The Heisenberg Uncertainty Principle", blurb: "You cannot simultaneously measure a particle's precise position and momentum.", explain: "At quantum scales, the act of observation alters reality; knowing where a particle is located blurs our certainty of where it is heading." },
-      { category: "History of Science", title: "The Copernican Principle", blurb: "Earth does not occupy a privileged central position in the universe.", explain: "Humanity's perspective is ordinary rather than central, a foundational philosophical shift that guided modern astronomy and cosmology." },
-      { category: "Social Psychology", title: "Groupthink", blurb: "Desire for harmony in decision-making groups leads to irrational outcomes.", explain: "Cohesive groups suppress dissenting viewpoints and critical evaluation to maintain consensus, often resulting in catastrophic strategic errors." },
-      { category: "Economics", title: "Moral Hazard", blurb: "Taking greater risks when insulated from negative consequences.", explain: "Insurance or government bailouts can encourage reckless behavior because individuals or corporations no longer bear the full downside of failure." },
-      { category: "Cryptology", title: "Public-Key Cryptography", blurb: "Securing digital communication using dual mathematical keys.", explain: "Encryption pairs public keys used to lock messages with private keys required to unlock them, enabling secure internet commerce." }
+      { category: "Philosophy", title: "The Ship of Theseus", blurb: "If every plank is replaced over time, is it still the same ship?", explain: "This classic metaphysical puzzle explores the nature of identity." },
+      { category: "Physics", title: "Why the Sky Is Blue", blurb: "Rayleigh scattering disperses shorter blue wavelengths across the atmosphere.", explain: "Sunlight is made of all colors. Gases scatter shorter blue light waves in every direction." },
+      { category: "Business", title: "The Diderot Effect", blurb: "Acquiring one luxury item triggers a cascading spiral of subsequent purchases.", explain: "Named after philosopher Denis Diderot." }
     ];
 
-    /* ================== 100 LOGIN QUOTES ================== */
     const LOGIN_QUOTES = [
       "Patience, persistence, and perspiration make an unbeatable combination for success.",
       "The expert in anything was once a beginner.",
-      "Discipline is choosing between what you want now and what you want most.",
-      "Small daily improvements are the key to staggering long-term results.",
-      "You don't have to see the whole staircase, just take the first step.",
-      "What you do every day matters more than what you do once in a while.",
-      "The pain of discipline weighs ounces; the pain of regret weighs tons.",
-      "Success is the sum of small efforts repeated day in and day out.",
-      "Motivation gets you started. Habit keeps you going.",
-      "It always seems impossible until it's done.",
-      "You are not required to set yourself on fire to keep others warm — pace yourself.",
-      "The comeback is always stronger than the setback.",
-      "Progress, not perfection.",
-      "Consistency is what transforms average into excellence.",
-      "A year from now, you'll wish you had started today.",
-      "Study hard now so future-you has an easier fight.",
-      "Doubt kills more dreams than failure ever will.",
-      "Every master was once a disaster.",
-      "The obstacle is the way.",
-      "Slow progress is still progress.",
-      "You don't need more time, you need to decide.",
-      "Hard choices, easy life. Easy choices, hard life.",
-      "The only way out is through.",
-      "Well done is better than well said.",
-      "Energy and persistence conquer all things.",
-      "Do the hard things while they're still hard, or they'll get harder.",
-      "Focus on being productive instead of busy.",
-      "You are your only limit.",
-      "Discomfort today, strength tomorrow.",
-      "Show up. That's most of the battle.",
-      "Action cures anxiety.",
-      "Fall seven times, stand up eight.",
-      "Dreams don't work unless you do.",
-      "Act as if what you do makes a difference. It does.",
-      "Keep your face to the sunshine and you cannot see a shadow.",
-      "Failure is simply the opportunity to begin again, this time more wisely.",
-      "Quality is not an act, it is a habit.",
-      "Your time is limited, so don't waste it living someone else's life.",
-      "If you are going through hell, keep going.",
-      "Everything you've ever wanted is on the other side of fear.",
-      "Believe you can and you're halfway there.",
-      "The future belongs to those who believe in the beauty of their dreams.",
-      "You miss 100% of the shots you don't take.",
-      "Whether you think you can or you think you can't, you're right.",
-      "I have not failed. I've just found 10,000 ways that won't work.",
-      "A creative man is motivated by the desire to achieve, not by the desire to beat others.",
-      "Excellence is not a skill. It is an attitude.",
-      "In the middle of difficulty lies opportunity.",
-      "What we achieve inwardly will change outer reality.",
-      "Start where you are. Use what you have. Do what you can.",
-      "Go confidently in the direction of your dreams. Live the life you've imagined.",
-      "The mind is everything. What you think you become.",
-      "An unexamined life is not worth living.",
-      "Strive not to be a success, but rather to be of value.",
-      "Life is 10% what happens to you and 90% how you react to it.",
-      "The best time to plant a tree was 20 years ago. The second best time is now.",
-      "Education is the most powerful weapon which you can use to change the world.",
-      "Be yourself; everyone else is already taken.",
-      "Two roads diverged in a wood, and I—I took the one less traveled by.",
-      "Whatever the mind of man can conceive and believe, it can achieve.",
-      "To handle yourself, use your head; to handle others, use your heart.",
-      "Too many of us are not living our dreams because we are living our fears.",
-      "Challenges are what make life interesting and overcoming them is what makes life meaningful.",
-      "If you want to lift yourself up, lift up someone else.",
-      "Limitations live only in our minds. But if we use our imaginations, our possibilities become limitless.",
-      "You can't connect the dots looking forward; you can only connect them looking backwards.",
-      "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
-      "I attribute my success to this: I never gave or took any excuse.",
-      "You measure the size of the accomplishment by the obstacles you had to overcome to reach your goals.",
-      "The most difficult thing is the decision to act, the rest is merely tenacity.",
-      "Smart people learn from everything and everyone, average people from their experiences, stupid people already have all the answers.",
-      "The person who says it cannot be done should not interrupt the person doing it.",
-      "Winning isn't everything, but wanting to win is.",
-      "Courage is resistance to fear, mastery of fear - not absence of fear.",
-      "Wise men speak because they have something to say; fools because they have to say something.",
-      "The only limit to our realization of tomorrow will be our doubts of today.",
-      "Creativity is intelligence having fun.",
-      "Do what you can, with what you have, where you are.",
-      "Integrity is doing the right thing, even when no one is watching.",
-      "A person who never made a mistake never tried anything new.",
-      "The secret of getting ahead is getting started.",
-      "Don't watch the clock; do what it does. Keep going.",
-      "Perseverance is not a long race; it is many short races one after the other.",
-      "Great minds discuss ideas; average minds discuss events; small minds discuss people.",
-      "If you judge people, you have no time to love them.",
-      "Knowledge speaks, but wisdom listens.",
-      "Peace comes from within. Do not seek it without.",
-      "The greatest glory in living lies not in never falling, but in rising every time we fall.",
-      "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
-      "If you look at what you have in life, you'll always have more.",
-      "Remember that not getting what you want is sometimes a wonderful stroke of luck.",
-      "Turn your wounds into wisdom.",
-      "Smile in the mirror. Do that every morning and you'll start to see a big difference in your life.",
-      "Identity is a prison you can never escape, but the way to redeem your past is not to run from it, but to try to understand it.",
-      "Simplicity is the ultimate sophistication.",
-      "The unexamined routine is dangerous, but the mindful habit builds empires.",
-      "Focus is saying no to the hundred other good ideas that exist.",
-      "Compound habits create exponential destinies.",
-      "Depth beats breadth when mastering complex fields.",
-      "Your environment dictates your defaults. Engineer it ruthlessly."
+      "Discipline is choosing between what you want now and what you want most."
     ];
 
     function getDayOfYear(d) {
@@ -1455,10 +1365,7 @@
     }
 
     function getWisdomCollectKey() { return 'alen_archive_wisdom_last_collected'; }
-
-    function isTodaysWisdomCollected() {
-      return localStorage.getItem(getWisdomCollectKey()) === getEstDateString();
-    }
+    function isTodaysWisdomCollected() { return localStorage.getItem(getWisdomCollectKey()) === getEstDateString(); }
 
     function openDailyWisdomModal() {
       const verse = getDailyItem(BIBLE_VERSES);
@@ -1548,7 +1455,6 @@
       if (!el) return;
       el.textContent = `"${getDailyItem(LOGIN_QUOTES)}"`;
     }
-    /* ================== END DAILY WISDOM ================== */
 
     function openKeyModal() { document.getElementById('key-modal-overlay').classList.add('active'); }
     function closeKeyModal() { document.getElementById('key-modal-overlay').classList.remove('active'); }
@@ -1584,8 +1490,6 @@
 
     let currentCategory = '', selectedDate = getEstDateString(), calDate = new Date(), editingId = null, currentModalStep = 1, selectedDiff = 'Medium', currentRevMode = 'prev';
 
-    function checkMandatoryRevisionNotification() {}
-
     function switchHubView(viewName) {
       document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active-view'));
@@ -1598,7 +1502,6 @@
     }
 
     let activeTagFilter = null;
-
     function extractTagsFromString(tagStr) {
       if (!tagStr) return [];
       const matches = tagStr.match(/#[A-Za-z0-9_]+/g);
@@ -1623,7 +1526,7 @@
       const tagCounts = getTagCounts();
 
       if (!tagCounts.length) {
-        cloud.innerHTML = '<div style="color:var(--text-dim);">No tags logged yet. Add tags like #Renal or #Pharma when logging an entry.</div>';
+        cloud.innerHTML = '<div style="color:var(--text-dim);">No tags logged yet.</div>';
         header.style.display = 'none';
         list.innerHTML = '';
         return;
@@ -1656,13 +1559,12 @@
       renderTagStreams();
     }
 
-    /* ================== XP / LEVEL / RANK SYSTEM ================== */
+    /* ================== XP SYSTEM ================== */
     const RANK_TIERS = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Crown', 'Ace', 'Vanguard', 'Exceed', 'Legend', 'Conqueror'];
     const XP_PER_LEVEL = 100;
 
     function getXPKey() { return 'alen_archive_total_xp'; }
     function getLoginBonusDateKey() { return 'alen_archive_last_login_bonus_date'; }
-
     function getTotalXP() { return parseFloat(localStorage.getItem(getXPKey()) || '0'); }
     function saveTotalXP(xp) { localStorage.setItem(getXPKey(), String(xp)); pushToCloud(); }
     function addXP(amount) { const next = getTotalXP() + amount; saveTotalXP(next); return next; }
@@ -1688,7 +1590,6 @@
     }
 
     function getLevelFromXP(xp) { return Math.floor(xp / XP_PER_LEVEL) + 1; }
-
     function getRankForLevel(level) {
       if (level <= RANK_TIERS.length) return { name: RANK_TIERS[level - 1].toUpperCase(), tierIndex: level - 1, conquerorNum: null };
       const conquerorNum = level - RANK_TIERS.length;
@@ -1738,7 +1639,6 @@
         }
       });
 
-      // Update top-right profile widget
       const profileRingFill = document.getElementById('profile-ring-fill');
       const profileRingLabel = document.getElementById('profile-ring-label');
       const profileTierLabel = document.getElementById('profile-tier-label');
@@ -1750,8 +1650,8 @@
       if (profileTierLabel) profileTierLabel.textContent = rank.name;
       if (profileXpLabel) profileXpLabel.textContent = `${xp.toFixed(0)} XP`;
     }
-    /* ================== END XP / LEVEL / RANK SYSTEM ================== */
 
+    /* ================== REVISION VIEW ================== */
     function setRevisionMode(mode) {
       currentRevMode = mode;
       document.querySelectorAll('.rev-btn').forEach(b => b.classList.remove('active-rev'));
@@ -1821,7 +1721,7 @@
               <button class="btn-recall btn-missed" onclick="markRecallKnowledge(${item.id}, false)">MOVE TO WEAK AREAS</button>
             </div>
           </div>
-        `).join('') : '<div style="color:var(--text-dim); padding:16px;">Nothing marked as known yet — hit "KNEW IT" on cards you get right and they\'ll show up here.</div>';
+        `).join('') : '<div style="color:var(--text-dim); padding:16px;">Nothing marked as known yet.</div>';
         return;
       }
 
@@ -1913,8 +1813,15 @@
 
     function handleCardClick(el, category) {
       const idx = cards.indexOf(el);
-      if (idx !== activeCardIndex) scrollCardToCenter(idx);
-      else openCategory(category);
+      if (idx !== activeCardIndex) {
+        scrollCardToCenter(idx);
+      } else {
+        if (category === 'Words Learned') {
+          openWordsLearnedDictionary();
+        } else {
+          openCategory(category);
+        }
+      }
     }
 
     function navigateStep(dir) { scrollCardToCenter(activeCardIndex + dir); }
@@ -1962,7 +1869,7 @@
     function saveEntry(e) {
       e.preventDefault();
       const title = document.getElementById('entry-title').value;
-      const content = document.getElementById('entry-content').innerHTML; // Rich HTML content
+      const content = document.getElementById('entry-content').innerHTML;
       const tags = document.getElementById('entry-tags').value;
       const diff = currentCategory === 'Medicine Concepts' ? document.getElementById('entry-difficulty').value : null;
       let data = getAllData();
@@ -2007,7 +1914,9 @@
       saveAllData(getAllData().filter(i => i.id !== id));
       saveWeakIds(getWeakIds().filter(i => i !== id));
       saveKnownIds(getKnownIds().filter(i => i !== id));
-      renderEntries(); updateAllViews();
+      if (document.getElementById('modal-overlay').classList.contains('active')) renderEntries();
+      if (document.getElementById('dict-modal-overlay').classList.contains('active')) renderDictionaryList();
+      updateAllViews();
     }
 
     function renderEntries() {
@@ -2048,22 +1957,24 @@
       ['Medicine Concepts', 'General Concepts', 'Words Learned', 'Interesting Thoughts', 'Business Ideas'].forEach(cat => {
         const count = getAllData().filter(i => i.category === cat).length;
         const el = document.getElementById('count-' + cat.replace(/\s+/g, '-'));
-        if (el) el.textContent = `${count} logs`;
+        if (el) {
+          el.textContent = cat === 'Words Learned' ? `${count} words` : `${count} logs`;
+        }
       });
-      renderMilestoneProgress(); renderRecentLogs(); renderMasteryMatrix(); checkMandatoryRevisionNotification();
+      renderMilestoneProgress(); renderRecentLogs(); renderMasteryMatrix();
     }
 
     function handleSearch(q) {
       const panel = document.getElementById('search-panel'), list = document.getElementById('search-results-list');
       if (!q.trim()) { panel.classList.remove('active'); return; }
-      const res = getAllData().filter(i => i.title.toLowerCase().includes(q.toLowerCase()) || i.content.toLowerCase().includes(q.toLowerCase()));
+      const res = getAllData().filter(i => (i.title || '').toLowerCase().includes(q.toLowerCase()) || (i.content || '').toLowerCase().includes(q.toLowerCase()));
       panel.classList.add('active');
       list.innerHTML = res.length ? res.map(i => `<div class="entry-item"><strong>${escapeHtml(i.title)}</strong><br/>${i.content}</div>`).join('') : 'No matches.';
     }
 
     function escapeHtml(str) { return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : ''; }
 
-    /* ================== FIREBASE STORAGE CLIPBOARD PASTE LISTENER ================== */
+    /* ================== FIREBASE STORAGE CLIPBOARD PASTE ================== */
     document.addEventListener('DOMContentLoaded', () => {
       const editor = document.getElementById('entry-content');
       if (editor) {
@@ -2071,10 +1982,9 @@
           const items = (e.clipboardData || e.originalEvent.clipboardData).items;
           for (let i = 0; i < items.length; i++) {
             if (items[i].type.indexOf('image') !== -1) {
-              e.preventDefault(); // Prevent default base64 paste
+              e.preventDefault();
               const file = items[i].getAsFile();
               
-              // Insert temporary loading placeholder at current cursor position
               const selection = window.getSelection();
               if (!selection.rangeCount) return;
               const range = selection.getRangeAt(0);
@@ -2087,28 +1997,18 @@
 
               try {
                 if (!window.__fb || !window.__fb.storage) {
-                  throw new Error("Firebase Storage not initialized.");
+                  throw new Error("Firebase Storage not ready.");
                 }
-                
                 const { storage, ref, uploadBytes, getDownloadURL } = window.__fb;
-                
-                // Create unique cloud file path
                 const filename = `screenshots/${Date.now()}_${file.name || 'screenshot.png'}`;
                 const storageRef = ref(storage, filename);
-
-                // Upload file to Firebase Storage bucket
                 const snapshot = await uploadBytes(storageRef, file);
-                
-                // Get secure public download URL
                 const downloadURL = await getDownloadURL(snapshot.ref);
 
-                // Replace placeholder with live cloud image tag
                 const imgHTML = `<img src="${downloadURL}" alt="Cloud Screenshot" style="max-width: 100%; border-radius: 6px; margin: 8px 0;" /><br>`;
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = imgHTML;
-                
                 placeholderSpan.parentNode.replaceChild(tempDiv.firstChild, placeholderSpan);
-
               } catch (err) {
                 console.error("Image upload failed:", err);
                 placeholderSpan.textContent = '[Error uploading screenshot to cloud]';
@@ -2157,7 +2057,7 @@
       loadCloudDataFirstThenBoot();
       if (!isTodaysWisdomCollected()) setTimeout(openDailyWisdomModal, 500);
     } else {
-      setCloudStatus(null);
+      setCloudStatus('error');
     }
   </script>
 </body>
