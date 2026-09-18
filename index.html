@@ -280,6 +280,16 @@
     .back-step-btn { background: transparent; border: 1px solid var(--panel-border); color: var(--starlight); padding: 4px 10px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
     .close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; }
 
+    /* MODAL TAB SWITCHER */
+    .modal-sub-nav { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.6); padding: 8px 16px; border-bottom: 1px solid var(--panel-border); }
+    .modal-nav-tab {
+      background: transparent; border: 1px solid var(--panel-border); color: var(--text-dim);
+      font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 6px; cursor: pointer;
+    }
+    .modal-nav-tab.active {
+      background: rgba(56, 189, 248, 0.18); border-color: var(--starlight); color: var(--starlight);
+    }
+
     .modal-body { padding: 24px; overflow-y: auto; }
     .step-calendar { display: flex; flex-direction: column; align-items: center; width: 100%; }
     .step-guide { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 18px; text-align: center; }
@@ -293,6 +303,30 @@
     .cal-day-lg:hover { background: rgba(56, 189, 248, 0.15); border-color: var(--starlight); }
     .cal-day-lg.active { background: var(--starlight); color: #000; font-weight: 700; }
     .cal-day-lg.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--stellar-rose); }
+
+    /* PREVIOUS LOGS SEPARATE CALENDAR STYLING */
+    .cal-day-lg.archive-has-logs {
+      background: rgba(52, 211, 153, 0.15);
+      border-color: rgba(52, 211, 153, 0.4);
+      color: var(--aurora-green);
+    }
+    .cal-day-lg.archive-has-logs:hover {
+      background: rgba(52, 211, 153, 0.28);
+      border-color: var(--aurora-green);
+    }
+    .cal-day-lg.archive-selected {
+      background: var(--aurora-green) !important;
+      color: #000 !important;
+      font-weight: 700;
+    }
+    .archive-log-count-pill {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      color: var(--solar-amber);
+      display: block;
+      margin-top: 2px;
+      font-weight: 700;
+    }
 
     .step-editor { display: none; }
     .date-banner { display: flex; justify-content: space-between; align-items: center; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; }
@@ -685,9 +719,9 @@
       </div>
     </div>
 
-    <!-- GENERAL & MEDICINE CALENDAR/EDITOR MODAL -->
+    <!-- GENERAL & MEDICINE CALENDAR / ARCHIVE MODAL -->
     <div class="modal-overlay" id="modal-overlay">
-      <div class="modal" id="modal-box">
+      <div class="modal wide-mode" id="modal-box">
         <div class="modal-header">
           <h2 id="modal-title-area">
             <button id="modal-back-btn" class="back-step-btn" onclick="goToStep(1)" style="display:none;">&lt; BACK TO CALENDAR</button>
@@ -695,46 +729,76 @@
           </h2>
           <button class="close-btn" onclick="closeModal()">&times;</button>
         </div>
+
+        <!-- SUB-NAVIGATION BAR BESIDE CALENDAR -->
+        <div class="modal-sub-nav">
+          <button class="modal-nav-tab active" id="modal-tab-logger" onclick="switchModalMode('logger')">📅 CALENDAR LOGGER</button>
+          <button class="modal-nav-tab" id="modal-tab-archive" onclick="switchModalMode('archive')">📂 PREVIOUS LOGS ARCHIVE</button>
+        </div>
+
         <div class="modal-body">
-          <div class="step-calendar" id="modal-step-1">
-            <div class="step-guide">// SELECT A DATE TO VIEW OR LOG ENTRIES</div>
-            <div class="calendar-large">
-              <div class="cal-header-large">
-                <button class="cal-nav-btn-lg" onclick="changeMonth(-1)">&lt;</button>
-                <span id="cal-month-year-lg">Month Year</span>
-                <button class="cal-nav-btn-lg" onclick="changeMonth(1)">&gt;</button>
+          <!-- SUB-VIEW A: STANDARD CALENDAR LOGGER -->
+          <div id="modal-view-logger">
+            <div class="step-calendar" id="modal-step-1">
+              <div class="step-guide">// SELECT A DATE TO VIEW OR LOG ENTRIES</div>
+              <div class="calendar-large">
+                <div class="cal-header-large">
+                  <button class="cal-nav-btn-lg" onclick="changeMonth(-1)">&lt;</button>
+                  <span id="cal-month-year-lg">Month Year</span>
+                  <button class="cal-nav-btn-lg" onclick="changeMonth(1)">&gt;</button>
+                </div>
+                <div class="cal-grid-large" id="cal-grid-lg"></div>
               </div>
-              <div class="cal-grid-large" id="cal-grid-lg"></div>
+            </div>
+
+            <div class="step-editor" id="modal-step-2">
+              <div class="date-banner">
+                <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-08-17</div></div>
+                <button class="back-step-btn" onclick="goToStep(1)">CHANGE DATE</button>
+              </div>
+              <form id="entry-form" onsubmit="saveEntry(event)">
+                <input type="hidden" id="edit-entry-id" value="" />
+                <div class="form-group"><label>Concept / Title</label><input type="text" id="entry-title" required /></div>
+                <div id="difficulty-group" class="form-group" style="display:none;">
+                  <label>Concept Difficulty Rating</label>
+                  <div class="difficulty-select-group" style="display:flex; gap:10px;">
+                    <div class="diff-opt" id="opt-hard" onclick="selectDifficulty('Hard')">HARD</div>
+                    <div class="diff-opt selected-med" id="opt-med" onclick="selectDifficulty('Medium')">MEDIUM</div>
+                    <div class="diff-opt" id="opt-easy" onclick="selectDifficulty('Easy')">EASY</div>
+                  </div>
+                  <input type="hidden" id="entry-difficulty" value="Medium" />
+                </div>
+                <div class="form-group">
+                  <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshots to Cloud Storage)</label>
+                  <div id="entry-content" class="rich-editor-box" contenteditable="true"></div>
+                </div>
+                <div class="form-group"><label>Tags</label><input type="text" id="entry-tags" placeholder="#Cardiology, #HighYield" /></div>
+                <button type="submit" id="submit-btn" class="btn-submit">LOG ENTRY TO ARCHIVE</button>
+                <button type="button" id="cancel-edit-btn" class="btn-cancel-edit" onclick="cancelEditing()">CANCEL EDIT</button>
+              </form>
+              <div class="timeline-title">// LOGGED ENTRIES FOR THIS DATE</div>
+              <div id="entries-container"></div>
             </div>
           </div>
 
-          <div class="step-editor" id="modal-step-2">
-            <div class="date-banner">
-              <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-08-17</div></div>
-              <button class="back-step-btn" onclick="goToStep(1)">CHANGE DATE</button>
-            </div>
-            <form id="entry-form" onsubmit="saveEntry(event)">
-              <input type="hidden" id="edit-entry-id" value="" />
-              <div class="form-group"><label>Concept / Title</label><input type="text" id="entry-title" required /></div>
-              <div id="difficulty-group" class="form-group" style="display:none;">
-                <label>Concept Difficulty Rating</label>
-                <div class="difficulty-select-group" style="display:flex; gap:10px;">
-                  <div class="diff-opt" id="opt-hard" onclick="selectDifficulty('Hard')">HARD</div>
-                  <div class="diff-opt selected-med" id="opt-med" onclick="selectDifficulty('Medium')">MEDIUM</div>
-                  <div class="diff-opt" id="opt-easy" onclick="selectDifficulty('Easy')">EASY</div>
+          <!-- SUB-VIEW B: PREVIOUS LOGS SEPARATE CALENDAR -->
+          <div id="modal-view-archive" style="display:none;">
+            <div class="step-calendar">
+              <div class="step-guide">// CALENDAR ARCHIVE: DATES HIGHLIGHTED IN GREEN CONTAIN PRIOR LOGS</div>
+              <div class="calendar-large">
+                <div class="cal-header-large">
+                  <button class="cal-nav-btn-lg" onclick="changeArchiveMonth(-1)">&lt;</button>
+                  <span id="cal-month-year-archive">Month Year</span>
+                  <button class="cal-nav-btn-lg" onclick="changeArchiveMonth(1)">&gt;</button>
                 </div>
-                <input type="hidden" id="entry-difficulty" value="Medium" />
+                <div class="cal-grid-large" id="cal-grid-archive"></div>
               </div>
-              <div class="form-group">
-                <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshots to Cloud Storage)</label>
-                <div id="entry-content" class="rich-editor-box" contenteditable="true"></div>
-              </div>
-              <div class="form-group"><label>Tags</label><input type="text" id="entry-tags" placeholder="#Cardiology, #HighYield" /></div>
-              <button type="submit" id="submit-btn" class="btn-submit">LOG ENTRY TO ARCHIVE</button>
-              <button type="button" id="cancel-edit-btn" class="btn-cancel-edit" onclick="cancelEditing()">CANCEL EDIT</button>
-            </form>
-            <div class="timeline-title">// LOGGED ENTRIES FOR THIS DATE</div>
-            <div id="entries-container"></div>
+            </div>
+
+            <div style="margin-top:24px; border-top:1px solid var(--panel-border); padding-top:16px;">
+              <div class="timeline-title" id="archive-selected-header">// LOGS ON SELECTED DATE</div>
+              <div id="archive-entries-container"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -976,6 +1040,7 @@
         updateAllViews();
         if (document.getElementById('modal-overlay').classList.contains('active')) {
           renderLargeCalendar();
+          renderArchiveCalendar();
           if (currentModalStep === 2) renderEntries();
         }
         if (document.getElementById('dict-modal-overlay').classList.contains('active')) {
@@ -1488,7 +1553,7 @@
       else { document.body.classList.remove('theme-study'); document.getElementById('theme-btn-label').textContent = 'STUDY MODE'; }
     }
 
-    let currentCategory = '', selectedDate = getEstDateString(), calDate = new Date(), editingId = null, currentModalStep = 1, selectedDiff = 'Medium', currentRevMode = 'prev';
+    let currentCategory = '', selectedDate = getEstDateString(), calDate = new Date(), calArchiveDate = new Date(), archiveSelectedDate = null, editingId = null, currentModalStep = 1, selectedDiff = 'Medium', currentRevMode = 'prev';
 
     function switchHubView(viewName) {
       document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
@@ -1831,16 +1896,120 @@
       document.getElementById('modal-category-title').textContent = cat.toUpperCase();
       document.getElementById('modal-overlay').classList.add('active');
       document.getElementById('difficulty-group').style.display = cat === 'Medicine Concepts' ? 'block' : 'none';
-      cancelEditing(); renderLargeCalendar(); goToStep(1);
+      cancelEditing();
+      switchModalMode('logger');
+      renderLargeCalendar();
+      goToStep(1);
     }
 
     function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); updateAllViews(); }
+    
     function goToStep(step) {
       currentModalStep = step;
       document.getElementById('modal-step-1').style.display = step === 1 ? 'flex' : 'none';
       document.getElementById('modal-step-2').style.display = step === 2 ? 'block' : 'none';
       document.getElementById('modal-back-btn').style.display = step === 2 ? 'inline-block' : 'none';
       if (step === 2) { document.getElementById('editor-active-date').textContent = selectedDate; renderEntries(); }
+    }
+
+    /* ================== MODAL SUB-NAVIGATION & PREVIOUS LOGS CALENDAR ================== */
+    function switchModalMode(mode) {
+      const tabLogger = document.getElementById('modal-tab-logger');
+      const tabArchive = document.getElementById('modal-tab-archive');
+      const viewLogger = document.getElementById('modal-view-logger');
+      const viewArchive = document.getElementById('modal-view-archive');
+      const backBtn = document.getElementById('modal-back-btn');
+
+      if (mode === 'logger') {
+        tabLogger.classList.add('active');
+        tabArchive.classList.remove('active');
+        viewLogger.style.display = 'block';
+        viewArchive.style.display = 'none';
+        backBtn.style.display = currentModalStep === 2 ? 'inline-block' : 'none';
+        renderLargeCalendar();
+      } else {
+        tabArchive.classList.add('active');
+        tabLogger.classList.remove('active');
+        viewLogger.style.display = 'none';
+        viewArchive.style.display = 'block';
+        backBtn.style.display = 'none';
+        renderArchiveCalendar();
+      }
+    }
+
+    function changeArchiveMonth(delta) {
+      calArchiveDate.setMonth(calArchiveDate.getMonth() + delta);
+      renderArchiveCalendar();
+    }
+
+    function renderArchiveCalendar() {
+      const grid = document.getElementById('cal-grid-archive');
+      if (!grid) return;
+      grid.innerHTML = '';
+      const year = calArchiveDate.getFullYear(), month = calArchiveDate.getMonth();
+      document.getElementById('cal-month-year-archive').textContent = `${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][month]} ${year}`;
+
+      ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].forEach(d => grid.innerHTML += `<div class="cal-day-label-lg">${d}</div>`);
+      const first = new Date(year, month, 1).getDay(), total = new Date(year, month + 1, 0).getDate();
+      for (let i = 0; i < first; i++) grid.appendChild(document.createElement('div'));
+
+      const catLogs = getAllData().filter(i => i.category === currentCategory);
+      const logDates = [...new Set(catLogs.map(i => i.date))];
+
+      if (!archiveSelectedDate && logDates.length) {
+        archiveSelectedDate = logDates.sort().reverse()[0];
+      }
+
+      for (let day = 1; day <= total; day++) {
+        const ds = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayLogs = catLogs.filter(i => i.date === ds);
+        const hasLogs = dayLogs.length > 0;
+        const isSelected = ds === archiveSelectedDate;
+
+        const el = document.createElement('div');
+        el.className = `cal-day-lg ${hasLogs ? 'archive-has-logs' : ''} ${isSelected ? 'archive-selected' : ''}`;
+        el.innerHTML = `<span>${day}</span>${hasLogs ? `<span class="archive-log-count-pill">${dayLogs.length} LOG${dayLogs.length === 1 ? '' : 'S'}</span>` : ''}`;
+        
+        el.onclick = () => {
+          archiveSelectedDate = ds;
+          renderArchiveCalendar();
+          renderArchiveEntries(ds);
+        };
+        grid.appendChild(el);
+      }
+
+      if (archiveSelectedDate) {
+        renderArchiveEntries(archiveSelectedDate);
+      } else {
+        document.getElementById('archive-entries-container').innerHTML = '<div style="color:var(--text-dim); padding:12px 0;">Select any highlighted date to inspect previous logs.</div>';
+      }
+    }
+
+    function renderArchiveEntries(dateStr) {
+      const container = document.getElementById('archive-entries-container');
+      const header = document.getElementById('archive-selected-header');
+      const filtered = getAllData().filter(i => i.category === currentCategory && i.date === dateStr);
+      header.textContent = `// PREVIOUS LOGS FOR: ${dateStr} (${filtered.length} TOTAL)`;
+
+      container.innerHTML = filtered.length ? filtered.map(i => `
+        <div class="entry-item">
+          <div class="entry-header">
+            <div class="entry-title">${escapeHtml(i.title)}</div>
+            <div class="entry-actions">
+              <button class="action-btn edit-btn" onclick="openAndEditFromArchive(${i.id}, '${i.date}')">EDIT IN LOGGER</button>
+              <button class="action-btn del-btn" onclick="deleteEntry(${i.id})">DEL</button>
+            </div>
+          </div>
+          <div class="entry-body">${i.content}</div>
+          ${i.tags ? `<div style="font-family:'Orbitron', monospace; font-size:0.65rem; color:var(--starlight); margin-top:6px;">${escapeHtml(i.tags)}</div>` : ''}
+        </div>
+      `).join('') : `<div style="color:var(--text-dim); padding:12px 0;">No entries recorded on ${dateStr}.</div>`;
+    }
+
+    function openAndEditFromArchive(id, dateStr) {
+      switchModalMode('logger');
+      onDateSelected(dateStr);
+      startEdit(id);
     }
 
     function onDateSelected(ds) { selectedDate = ds; goToStep(2); }
@@ -1884,7 +2053,9 @@
       saveAllData(data);
       document.getElementById('entry-form').reset();
       document.getElementById('entry-content').innerHTML = '';
-      renderEntries(); updateAllViews();
+      renderEntries(); 
+      renderArchiveCalendar();
+      updateAllViews();
     }
 
     function startEdit(id) {
@@ -1914,7 +2085,10 @@
       saveAllData(getAllData().filter(i => i.id !== id));
       saveWeakIds(getWeakIds().filter(i => i !== id));
       saveKnownIds(getKnownIds().filter(i => i !== id));
-      if (document.getElementById('modal-overlay').classList.contains('active')) renderEntries();
+      if (document.getElementById('modal-overlay').classList.contains('active')) {
+        renderEntries();
+        renderArchiveCalendar();
+      }
       if (document.getElementById('dict-modal-overlay').classList.contains('active')) renderDictionaryList();
       updateAllViews();
     }
