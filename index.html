@@ -234,9 +234,7 @@
     .badge-title { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .badge-status { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: var(--solar-amber); }
 
-    /* =========================================================
-       QUIZLET-STYLE FLASHCARD RUNNER
-       ========================================================= */
+    /* QUIZLET-STYLE FLASHCARD RUNNER */
     .rev-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 12px; border-radius: 8px; align-items: center; }
     .rev-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); color: var(--text-dim); font-family: 'Orbitron', monospace; font-size: 0.75rem; padding: 7px 12px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
     .rev-btn.active-rev { background: rgba(56, 189, 248, 0.15); border-color: var(--starlight); color: var(--starlight); font-weight: 700; }
@@ -478,6 +476,61 @@
     .dict-word-meaning { font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; line-height: 1.4; }
     .dict-word-meaning img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); display: block; }
     .dict-word-tags { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--starlight); margin-top: 6px; }
+
+    /* DAILY WISDOM MODAL BUTTONS & EXPLANATION BOXES */
+    .wisdom-block {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .btn-reveal {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px 16px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid var(--starlight) !important;
+      background: rgba(56, 189, 248, 0.12) !important;
+      color: var(--starlight) !important;
+      transition: all 0.25s ease;
+      display: block;
+      text-align: center;
+    }
+    .btn-reveal:hover {
+      background: rgba(56, 189, 248, 0.25) !important;
+      color: #fff !important;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+    .wisdom-explain-active {
+      border-color: var(--solar-amber) !important;
+      background: rgba(251, 191, 36, 0.14) !important;
+      color: var(--solar-amber) !important;
+    }
+    .recall-answer-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: rgba(3, 7, 18, 0.7);
+      border: 1px dashed rgba(56, 189, 248, 0.25);
+      display: none;
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .recall-answer-box.revealed {
+      display: block;
+      animation: fadeInAnswer 0.25s ease-out;
+    }
+    @keyframes fadeInAnswer {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .footer-tools { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
     .tool-btn { background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--text-dim); padding: 6px 14px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
@@ -1039,9 +1092,9 @@
               <div class="wisdom-block-tag tag-bible">// DAILY BIBLE VERSE</div>
               <div class="wisdom-verse-ref" id="wisdom-verse-ref">—</div>
               <div class="wisdom-verse-text" id="wisdom-verse-text">—</div>
-              <button class="btn-recall btn-reveal" id="wisdom-explain-btn" onclick="toggleWisdomExplain()">EXPLAIN — CATHOLIC PERSPECTIVE</button>
+              <button class="btn-reveal" id="wisdom-explain-btn" onclick="toggleWisdomExplain()">EXPLAIN — CATHOLIC PERSPECTIVE</button>
               <div class="recall-answer-box" id="wisdom-explain-box">
-                <div id="wisdom-verse-explain" style="color:var(--text-dim); line-height:1.5;"></div>
+                <div id="wisdom-verse-explain"></div>
               </div>
             </div>
 
@@ -1050,9 +1103,9 @@
               <div class="wisdom-topic-category" id="wisdom-topic-category">—</div>
               <div class="wisdom-topic-title" id="wisdom-topic-title">—</div>
               <div class="wisdom-topic-blurb" id="wisdom-topic-blurb" style="color:var(--text-dim); line-height:1.5; margin-bottom:12px;"></div>
-              <button class="btn-recall btn-reveal" id="wisdom-topic-explain-btn" onclick="toggleTopicExplain()">EXPLAIN TOPIC</button>
+              <button class="btn-reveal" id="wisdom-topic-explain-btn" onclick="toggleTopicExplain()">EXPLAIN TOPIC</button>
               <div class="recall-answer-box" id="wisdom-topic-explain-box">
-                <div id="wisdom-topic-explain-text" style="color:var(--text-dim); line-height:1.5;"></div>
+                <div id="wisdom-topic-explain-text"></div>
               </div>
             </div>
           </div>
@@ -1279,15 +1332,12 @@
     function getReviewedDays() { return JSON.parse(localStorage.getItem(getReviewedDaysKey()) || '[]'); }
     function saveReviewedDays(days) { localStorage.setItem(getReviewedDaysKey(), JSON.stringify(days)); pushToCloud(); }
 
-    /* SANITIZER: Clean foreign Angular comments, footnotes & framework spans from pasted text */
+    /* SANITIZER: Strip raw Angular comments & footnotes */
     function sanitizeContent(html) {
       if (!html) return '';
       let clean = html;
-      // Remove HTML comments
       clean = clean.replace(/<!--[\s\S]*?-->/g, '');
-      // Remove Angular/Google custom source-footnote elements
       clean = clean.replace(/<source-footnote[\s\S]*?<\/source-footnote>/gi, '');
-      // Remove generic wrapper spans while retaining internal text
       clean = clean.replace(/<span\s+data-path-to-node[^>]*>([\s\S]*?)<\/span>/gi, '$1');
       clean = clean.replace(/<span\s+class="ng-[^>]*">([\s\S]*?)<\/span>/gi, '$1');
       return clean.trim();
@@ -1600,14 +1650,18 @@
       document.getElementById('wisdom-verse-text').textContent = `"${verse.text}"`;
       document.getElementById('wisdom-verse-explain').textContent = verse.explain;
       document.getElementById('wisdom-explain-box').classList.remove('revealed');
-      document.getElementById('wisdom-explain-btn').textContent = 'EXPLAIN — CATHOLIC PERSPECTIVE';
+      const wBtn = document.getElementById('wisdom-explain-btn');
+      wBtn.textContent = 'EXPLAIN — CATHOLIC PERSPECTIVE';
+      wBtn.classList.remove('wisdom-explain-active');
 
       document.getElementById('wisdom-topic-category').textContent = `// ${topic.category.toUpperCase()}`;
       document.getElementById('wisdom-topic-title').textContent = topic.title;
       document.getElementById('wisdom-topic-blurb').textContent = topic.blurb;
       document.getElementById('wisdom-topic-explain-text').textContent = topic.explain;
       document.getElementById('wisdom-topic-explain-box').classList.remove('revealed');
-      document.getElementById('wisdom-topic-explain-btn').textContent = 'EXPLAIN TOPIC';
+      const tBtn = document.getElementById('wisdom-topic-explain-btn');
+      tBtn.textContent = 'EXPLAIN TOPIC';
+      tBtn.classList.remove('wisdom-explain-active');
 
       document.getElementById('wisdom-modal-overlay').classList.add('active');
 
@@ -1666,13 +1720,17 @@
     function toggleWisdomExplain() {
       const box = document.getElementById('wisdom-explain-box'), btn = document.getElementById('wisdom-explain-btn');
       box.classList.toggle('revealed');
-      btn.textContent = box.classList.contains('revealed') ? 'HIDE EXPLANATION' : 'EXPLAIN — CATHOLIC PERSPECTIVE';
+      const isRev = box.classList.contains('revealed');
+      btn.textContent = isRev ? 'HIDE EXPLANATION' : 'EXPLAIN — CATHOLIC PERSPECTIVE';
+      btn.classList.toggle('wisdom-explain-active', isRev);
     }
 
     function toggleTopicExplain() {
       const box = document.getElementById('wisdom-topic-explain-box'), btn = document.getElementById('wisdom-topic-explain-btn');
       box.classList.toggle('revealed');
-      btn.textContent = box.classList.contains('revealed') ? 'HIDE EXPLANATION' : 'EXPLAIN TOPIC';
+      const isRev = box.classList.contains('revealed');
+      btn.textContent = isRev ? 'HIDE EXPLANATION' : 'EXPLAIN TOPIC';
+      btn.classList.toggle('wisdom-explain-active', isRev);
     }
 
     function renderLoginQuote() {
@@ -1970,7 +2028,6 @@
       const autoPrevDate = allPastDates.length ? allPastDates[0] : null;
       const prevDayLogs = autoPrevDate ? medData.filter(i => i.date === autoPrevDate) : [];
 
-      // Update HUD counters
       document.getElementById('weak-count').textContent = weakIds.length;
       document.getElementById('known-count').textContent = knownIds.length;
       document.getElementById('untested-count').textContent = untestedItems.length;
@@ -2106,13 +2163,11 @@
         saveWeakIds(weak);
       }
       
-      // Auto-advance to next card Quizlet-style
       isCurrentCardFlipped = false;
       currentCardIndex++;
       renderRevisionView();
     }
 
-    // Keyboard support for Quizlet mode (Space = Flip, Left = Prev, Right = Next)
     window.addEventListener('keydown', (e) => {
       const revPanel = document.getElementById('view-revision');
       if (revPanel && revPanel.classList.contains('active-view') && activeDeck.length) {
