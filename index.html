@@ -242,7 +242,6 @@
     .recall-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--starlight); border-radius: 10px; padding: 20px; margin-bottom: 16px; position: relative; }
     .recall-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .recall-title { font-size: 1.25rem; font-weight: 700; color: #fff; }
-    .recall-title img { max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: block; }
     .recall-status-tag { font-family: 'Orbitron', monospace; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
     .status-known { background: rgba(52, 211, 153, 0.15); color: var(--aurora-green); border: 1px solid var(--aurora-green); }
     .status-weak { background: rgba(244, 63, 94, 0.15); color: var(--stellar-rose); border: 1px solid var(--stellar-rose); }
@@ -363,15 +362,6 @@
     .rich-editor-box:focus { border-color: var(--starlight); box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
     .rich-editor-box img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); }
 
-    /* Single-line rich editor for titles */
-    .rich-title-editor {
-      width: 100%; min-height: 44px; background: var(--panel-bg); border: 1px solid var(--panel-border);
-      border-radius: 6px; padding: 10px 14px; color: #fff; font-family: inherit; font-size: 1rem;
-      outline: none; line-height: 1.4;
-    }
-    .rich-title-editor:focus { border-color: var(--starlight); box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
-    .rich-title-editor img { max-height: 90px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
-
     .btn-submit { background: linear-gradient(135deg, var(--starlight), var(--nebula-violet)); color: #000; border: none; padding: 11px 18px; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.85rem; border-radius: 6px; cursor: pointer; width: 100%; }
     .btn-submit.btn-update { background: linear-gradient(135deg, var(--solar-amber), #f97316); }
     .btn-cancel-edit { background: transparent; border: 1px solid var(--text-dim); color: var(--text-dim); padding: 6px 12px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 8px; display: none; }
@@ -380,7 +370,6 @@
     .entry-item { background: var(--panel-bg); border-left: 3px solid var(--starlight); padding: 14px; border-radius: 0 8px 8px 0; margin-top: 12px; border: 1px solid rgba(255,255,255,0.04); }
     .entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .entry-title { font-weight: 700; color: #fff; font-size: 1.05rem; }
-    .entry-title img { max-height: 90px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
     .entry-body { font-size: 0.9rem; color: var(--text-dim); margin-top: 6px; white-space: pre-wrap; line-height: 1.45; }
     .entry-body img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); }
 
@@ -406,7 +395,6 @@
     .dict-word-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--aurora-green); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
     .dict-word-header { display: flex; justify-content: space-between; align-items: center; }
     .dict-word-title { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #fff; font-weight: 700; }
-    .dict-word-title img { max-height: 80px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
     .dict-word-pos { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: var(--solar-amber); letter-spacing: 1px; margin-left: 8px; text-transform: uppercase; }
     .dict-word-meaning { font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; line-height: 1.4; }
     .dict-word-meaning img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); display: block; }
@@ -797,19 +785,7 @@
               </div>
               <form id="entry-form" onsubmit="saveEntry(event)">
                 <input type="hidden" id="edit-entry-id" value="" />
-                
-                <!-- TITLE / CONCEPT WITH SCREENSHOT SUPPORT -->
-                <div class="form-group">
-                  <div class="screenshot-attach-bar">
-                    <label style="margin-bottom:0;">Concept / Title (Ctrl+V / Cmd+V to paste screenshot)</label>
-                    <div>
-                      <button type="button" class="btn-screenshot-upload" onclick="triggerTitleImageUpload('concept-title-file-input')">📷 Attach Title Screenshot</button>
-                      <input type="file" id="concept-title-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'entry-title')" />
-                    </div>
-                  </div>
-                  <div id="entry-title" class="rich-title-editor" contenteditable="true" placeholder="Enter topic title or paste screenshot..."></div>
-                </div>
-
+                <div class="form-group"><label>Concept / Title</label><input type="text" id="entry-title" required /></div>
                 <div id="difficulty-group" class="form-group" style="display:none;">
                   <label>Concept Difficulty Rating</label>
                   <div class="difficulty-select-group" style="display:flex; gap:10px;">
@@ -820,7 +796,6 @@
                   <input type="hidden" id="entry-difficulty" value="Medium" />
                 </div>
                 
-                <!-- NOTES WITH SCREENSHOT SUPPORT -->
                 <div class="form-group">
                   <div class="screenshot-attach-bar">
                     <label style="margin-bottom:0;">Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshot)</label>
@@ -884,12 +859,8 @@
               <input type="hidden" id="dict-entry-id" value="" />
               <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px; margin-bottom:12px;">
                 <div>
-                  <div class="screenshot-attach-bar">
-                    <label style="margin-bottom:0;">Word / Term</label>
-                    <button type="button" class="btn-screenshot-upload" style="padding:2px 6px; font-size:0.62rem;" onclick="triggerTitleImageUpload('dict-word-file-input')">📷 Attach</button>
-                    <input type="file" id="dict-word-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'dict-word')" />
-                  </div>
-                  <div id="dict-word" class="rich-title-editor" contenteditable="true" placeholder="e.g., Idiopathic"></div>
+                  <label>Word / Term</label>
+                  <input type="text" id="dict-word" placeholder="e.g., Idiopathic" required />
                 </div>
                 <div>
                   <label>Part of Speech</label>
@@ -1362,7 +1333,6 @@
       dictEditingId = null;
       document.getElementById('dict-form').reset();
       document.getElementById('dict-entry-id').value = '';
-      document.getElementById('dict-word').innerHTML = '';
       document.getElementById('dict-meaning-editor').innerHTML = '';
       document.getElementById('dict-form-wrapper').style.display = 'none';
       document.getElementById('dict-toggle-form-btn').textContent = '+ ADD NEW WORD';
@@ -1373,23 +1343,18 @@
 
     function saveDictionaryWord(e) {
       e.preventDefault();
-      const wordHTML = document.getElementById('dict-word').innerHTML.trim();
+      const word = document.getElementById('dict-word').value.trim();
       const pos = document.getElementById('dict-pos').value.trim();
       const meaningHTML = document.getElementById('dict-meaning-editor').innerHTML.trim();
       const tags = document.getElementById('dict-tags').value.trim();
       let data = getAllData();
-
-      if (!wordHTML) {
-        alert("Please enter a word or paste a title screenshot.");
-        return;
-      }
 
       const formattedContent = pos ? `<em>(${escapeHtml(pos)})</em> ${meaningHTML}` : meaningHTML;
 
       if (dictEditingId) {
         data = data.map(item => item.id === dictEditingId ? {
           ...item,
-          title: wordHTML,
+          title: word,
           pos: pos,
           meaning: meaningHTML,
           content: formattedContent,
@@ -1402,7 +1367,7 @@
           id: Date.now(),
           category: 'Words Learned',
           date: getEstDateString(),
-          title: wordHTML,
+          title: word,
           pos: pos,
           meaning: meaningHTML,
           content: formattedContent,
@@ -1423,14 +1388,14 @@
       if (!entry) return;
       dictEditingId = id;
       document.getElementById('dict-entry-id').value = id;
-      document.getElementById('dict-word').innerHTML = entry.title || '';
+      document.getElementById('dict-word').value = entry.title || '';
       document.getElementById('dict-pos').value = entry.pos || '';
       document.getElementById('dict-meaning-editor').innerHTML = entry.meaning || entry.content || '';
       document.getElementById('dict-tags').value = entry.tags || '';
 
       document.getElementById('dict-form-wrapper').style.display = 'block';
       document.getElementById('dict-toggle-form-btn').textContent = '− EDITING WORD';
-      document.getElementById('dict-form-header').textContent = `// EDIT DEFINITION`;
+      document.getElementById('dict-form-header').textContent = `// EDIT DEFINITION: ${entry.title}`;
       const sb = document.getElementById('dict-submit-btn');
       sb.textContent = 'UPDATE DEFINITION';
       sb.classList.add('btn-update');
@@ -1459,7 +1424,7 @@
           <div class="dict-word-card">
             <div class="dict-word-header">
               <div>
-                <span class="dict-word-title">${item.title}</span>
+                <span class="dict-word-title">${escapeHtml(item.title)}</span>
                 ${item.pos ? `<span class="dict-word-pos">(${escapeHtml(item.pos)})</span>` : ''}
               </div>
               <div class="entry-actions">
@@ -1476,11 +1441,6 @@
     /* ================== END WORDS LEARNED ================== */
 
     /* ================== SCREENSHOT UPLOAD HELPERS ================== */
-    function triggerTitleImageUpload(fileInputId) {
-      const input = document.getElementById(fileInputId);
-      if (input) input.click();
-    }
-
     function triggerConceptImageUpload() {
       const input = document.getElementById('concept-file-input');
       if (input) input.click();
@@ -1498,11 +1458,12 @@
       const container = document.getElementById(targetContainerId);
       if (!container) return;
 
-      const placeholder = document.createElement('span');
+      // Insert placeholder
+      const placeholder = document.createElement('div');
       placeholder.style.color = 'var(--starlight)';
       placeholder.style.fontFamily = "'Orbitron', monospace";
       placeholder.style.fontSize = '0.75rem';
-      placeholder.textContent = '[Uploading screenshot...]';
+      placeholder.textContent = '[Uploading screenshot to cloud...]';
       container.appendChild(placeholder);
 
       try {
@@ -1518,26 +1479,19 @@
 
         const img = document.createElement('img');
         img.src = downloadURL;
-        img.alt = "Screenshot";
+        img.alt = "Cloud Screenshot";
+        img.style.maxWidth = "100%";
         img.style.borderRadius = "6px";
-        img.style.margin = "4px 0";
+        img.style.margin = "8px 0";
         img.style.border = "1px solid rgba(255,255,255,0.1)";
-
-        if (targetContainerId === 'entry-title' || targetContainerId === 'dict-word') {
-          img.style.maxHeight = "90px";
-          img.style.maxWidth = "100%";
-          img.style.verticalAlign = "middle";
-        } else {
-          img.style.maxWidth = "100%";
-        }
 
         container.replaceChild(img, placeholder);
       } catch (err) {
         console.error("Screenshot upload failed:", err);
-        placeholder.textContent = '[Upload error]';
+        placeholder.textContent = '[Error uploading screenshot to cloud]';
         placeholder.style.color = 'var(--stellar-rose)';
       } finally {
-        event.target.value = '';
+        event.target.value = ''; // Reset input so same image can be reselected if needed
       }
     }
     /* ================== END SCREENSHOT HELPERS ================== */
@@ -1753,7 +1707,7 @@
         header.textContent = `${filtered.length} LOG${filtered.length === 1 ? '' : 'S'} TAGGED ${activeTagFilter.toUpperCase()}`;
         list.innerHTML = filtered.length ? filtered.map(i => `
           <div class="entry-item">
-            <div class="entry-title">${i.title} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div>
+            <div class="entry-title">${escapeHtml(i.title)} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div>
             <div class="entry-body">${i.content}</div>
           </div>
         `).join('') : '<div style="color:var(--text-dim);">No logs for this tag.</div>';
@@ -1922,7 +1876,7 @@
         container.innerHTML = targetDeck.length ? targetDeck.map(item => `
           <div class="recall-card" id="card-node-${item.id}" style="border-left-color: var(--aurora-green);">
             <div class="recall-header">
-              <div class="recall-title">${item.title}</div>
+              <div class="recall-title">${escapeHtml(item.title)}</div>
               <span class="recall-status-tag status-known">KNOWN FACT</span>
             </div>
             <div style="margin-top:10px; color:var(--text-dim); line-height:1.5;">${item.content}</div>
@@ -1947,7 +1901,7 @@
         return `
           <div class="recall-card" id="card-node-${item.id}">
             <div class="recall-header">
-              <div class="recall-title">${item.title}</div>
+              <div class="recall-title">${escapeHtml(item.title)}</div>
               ${statusTagHtml}
             </div>
             <button class="btn-recall btn-reveal" id="reveal-btn-${item.id}" onclick="toggleRecallAnswer(${item.id})">REVEAL SUMMARY</button>
@@ -2148,7 +2102,7 @@
       container.innerHTML = filtered.length ? filtered.map(i => `
         <div class="entry-item" style="border-left-color: var(--aurora-green); background: rgba(15, 23, 42, 0.9);">
           <div class="entry-header">
-            <div class="entry-title">${i.title}</div>
+            <div class="entry-title">${escapeHtml(i.title)}</div>
             <div class="entry-actions">
               <button class="action-btn edit-btn" onclick="openAndEditFromArchive(${i.id}, '${i.date}')">EDIT IN LOGGER</button>
               <button class="action-btn del-btn" onclick="deleteEntry(${i.id})">DEL</button>
@@ -2191,27 +2145,21 @@
 
     function saveEntry(e) {
       e.preventDefault();
-      const titleHTML = document.getElementById('entry-title').innerHTML.trim();
+      const title = document.getElementById('entry-title').value;
       const content = document.getElementById('entry-content').innerHTML;
       const tags = document.getElementById('entry-tags').value;
       const diff = currentCategory === 'Medicine Concepts' ? document.getElementById('entry-difficulty').value : null;
       let data = getAllData();
 
-      if (!titleHTML) {
-        alert("Please enter a concept/title or paste a screenshot.");
-        return;
-      }
-
       if (editingId) {
-        data = data.map(item => item.id === editingId ? { ...item, title: titleHTML, content, tags, difficulty: diff, lastModified: Date.now() } : item);
+        data = data.map(item => item.id === editingId ? { ...item, title, content, tags, difficulty: diff, lastModified: Date.now() } : item);
         cancelEditing();
       } else {
-        data.push({ id: Date.now(), category: currentCategory, date: selectedDate, title: titleHTML, content, tags, difficulty: diff || 'Medium', lastModified: Date.now() });
+        data.push({ id: Date.now(), category: currentCategory, date: selectedDate, title, content, tags, difficulty: diff || 'Medium', lastModified: Date.now() });
         addXP(2.5);
       }
       saveAllData(data);
       document.getElementById('entry-form').reset();
-      document.getElementById('entry-title').innerHTML = '';
       document.getElementById('entry-content').innerHTML = '';
       renderEntries(); 
       renderArchiveCalendar();
@@ -2222,7 +2170,7 @@
       const entry = getAllData().find(i => i.id === id);
       if (!entry) return;
       editingId = id;
-      document.getElementById('entry-title').innerHTML = entry.title || '';
+      document.getElementById('entry-title').value = entry.title;
       document.getElementById('entry-content').innerHTML = entry.content || '';
       document.getElementById('entry-tags').value = entry.tags || '';
       if (entry.category === 'Medicine Concepts') selectDifficulty(entry.difficulty || 'Medium');
@@ -2234,7 +2182,6 @@
     function cancelEditing() {
       editingId = null;
       document.getElementById('entry-form').reset();
-      document.getElementById('entry-title').innerHTML = '';
       document.getElementById('entry-content').innerHTML = '';
       const sb = document.getElementById('submit-btn');
       sb.textContent = 'LOG ENTRY TO ARCHIVE'; sb.classList.remove('btn-update');
@@ -2260,7 +2207,7 @@
       container.innerHTML = filtered.length ? filtered.map(i => `
         <div class="entry-item">
           <div class="entry-header">
-            <div class="entry-title">${i.title}</div>
+            <div class="entry-title">${escapeHtml(i.title)}</div>
             <div class="entry-actions">
               <button class="action-btn edit-btn" onclick="startEdit(${i.id})">EDIT</button>
               <button class="action-btn del-btn" onclick="deleteEntry(${i.id})">DEL</button>
@@ -2274,7 +2221,7 @@
     function renderRecentLogs() {
       const list = document.getElementById('recent-logs-list');
       const sorted = [...getAllData()].sort((a, b) => (b.lastModified || b.id) - (a.lastModified || a.id)).slice(0, 20);
-      list.innerHTML = sorted.length ? sorted.map(i => `<div class="entry-item"><div class="entry-title">${i.title} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div><div class="entry-body">${i.content}</div></div>`).join('') : '<div style="color:var(--text-dim);">No logs yet.</div>';
+      list.innerHTML = sorted.length ? sorted.map(i => `<div class="entry-item"><div class="entry-title">${escapeHtml(i.title)} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div><div class="entry-body">${i.content}</div></div>`).join('') : '<div style="color:var(--text-dim);">No logs yet.</div>';
     }
 
     function renderMasteryMatrix() {
@@ -2283,9 +2230,9 @@
       document.getElementById('count-diff-hard').textContent = `${hard.length} TOPICS`;
       document.getElementById('count-diff-med').textContent = `${medT.length} TOPICS`;
       document.getElementById('count-diff-easy').textContent = `${easy.length} TOPICS`;
-      document.getElementById('tier-list-hard').innerHTML = hard.length ? hard.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
-      document.getElementById('tier-list-med').innerHTML = medT.length ? medT.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
-      document.getElementById('tier-list-easy').innerHTML = easy.length ? easy.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-hard').innerHTML = hard.length ? hard.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-med').innerHTML = medT.length ? medT.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-easy').innerHTML = easy.length ? easy.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
     }
 
     function updateAllViews() {
@@ -2304,14 +2251,14 @@
       if (!q.trim()) { panel.classList.remove('active'); return; }
       const res = getAllData().filter(i => (i.title || '').toLowerCase().includes(q.toLowerCase()) || (i.content || '').toLowerCase().includes(q.toLowerCase()));
       panel.classList.add('active');
-      list.innerHTML = res.length ? res.map(i => `<div class="entry-item"><strong>${i.title}</strong><br/>${i.content}</div>`).join('') : 'No matches.';
+      list.innerHTML = res.length ? res.map(i => `<div class="entry-item"><strong>${escapeHtml(i.title)}</strong><br/>${i.content}</div>`).join('') : 'No matches.';
     }
 
     function escapeHtml(str) { return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : ''; }
 
     /* ================== FIREBASE STORAGE CLIPBOARD PASTE ================== */
     document.addEventListener('DOMContentLoaded', () => {
-      ['entry-title', 'entry-content', 'dict-word', 'dict-meaning-editor'].forEach(editorId => {
+      ['entry-content', 'dict-meaning-editor'].forEach(editorId => {
         const editor = document.getElementById(editorId);
         if (editor) {
           editor.addEventListener('paste', async function(e) {
@@ -2328,7 +2275,7 @@
                 
                 const placeholderSpan = document.createElement('span');
                 placeholderSpan.style.color = 'var(--starlight)';
-                placeholderSpan.textContent = '[Uploading screenshot...]';
+                placeholderSpan.textContent = '[Uploading screenshot to cloud...]';
                 range.insertNode(placeholderSpan);
 
                 try {
@@ -2341,26 +2288,13 @@
                   const snapshot = await uploadBytes(storageRef, file);
                   const downloadURL = await getDownloadURL(snapshot.ref);
 
-                  const img = document.createElement('img');
-                  img.src = downloadURL;
-                  img.alt = "Screenshot";
-                  img.style.borderRadius = "6px";
-                  img.style.margin = "4px 0";
-                  img.style.border = "1px solid rgba(255,255,255,0.1)";
-
-                  if (editorId === 'entry-title' || editorId === 'dict-word') {
-                    img.style.maxHeight = "90px";
-                    img.style.maxWidth = "100%";
-                    img.style.verticalAlign = "middle";
-                  } else {
-                    img.style.maxWidth = "100%";
-                    img.style.display = "block";
-                  }
-
-                  placeholderSpan.parentNode.replaceChild(img, placeholderSpan);
+                  const imgHTML = `<img src="${downloadURL}" alt="Cloud Screenshot" style="max-width: 100%; border-radius: 6px; margin: 8px 0; border:1px solid rgba(255,255,255,0.1);" /><br>`;
+                  const tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = imgHTML;
+                  placeholderSpan.parentNode.replaceChild(tempDiv.firstChild, placeholderSpan);
                 } catch (err) {
                   console.error("Image upload failed:", err);
-                  placeholderSpan.textContent = '[Error uploading screenshot]';
+                  placeholderSpan.textContent = '[Error uploading screenshot to cloud]';
                   placeholderSpan.style.color = 'var(--stellar-rose)';
                 }
               }
