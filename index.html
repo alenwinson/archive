@@ -234,27 +234,105 @@
     .badge-title { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .badge-status { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: var(--solar-amber); }
 
-    .rev-nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 12px; border-radius: 8px; align-items: center; }
-    .rev-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); color: var(--text-dim); font-family: 'Orbitron', monospace; font-size: 0.75rem; padding: 7px 14px; border-radius: 4px; cursor: pointer; }
+    /* =========================================================
+       QUIZLET-STYLE FLASHCARD RUNNER
+       ========================================================= */
+    .rev-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 12px; border-radius: 8px; align-items: center; }
+    .rev-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); color: var(--text-dim); font-family: 'Orbitron', monospace; font-size: 0.75rem; padding: 7px 12px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
     .rev-btn.active-rev { background: rgba(56, 189, 248, 0.15); border-color: var(--starlight); color: var(--starlight); font-weight: 700; }
-    .rev-select { background: #090e1f; border: 1px solid var(--panel-border); color: var(--starlight); font-family: 'Orbitron', monospace; font-size: 0.75rem; padding: 6px 12px; border-radius: 4px; }
+    .rev-cal-btn { background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(99, 102, 241, 0.15)); border-color: var(--starlight); color: var(--starlight); font-weight: 700; }
 
-    .recall-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--starlight); border-radius: 10px; padding: 20px; margin-bottom: 16px; position: relative; }
-    .recall-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .recall-title { font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .quizlet-runner {
+      max-width: 780px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+    .quizlet-top-bar {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', monospace; font-size: 0.8rem;
+    }
+    .quizlet-counter { color: var(--starlight); font-weight: 700; }
+    .quizlet-deck-name { color: var(--text-dim); }
+
+    .quizlet-card-stage {
+      width: 100%;
+      min-height: 380px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .quizlet-card-stage.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .quizlet-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .quizlet-face-front {
+      border-top: 4px solid var(--starlight);
+    }
+    .quizlet-face-back {
+      transform: rotateY(180deg);
+      border-top: 4px solid var(--aurora-green);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(9, 14, 31, 0.98));
+    }
+
+    .quizlet-header {
+      display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 10px; margin-bottom: 18px;
+    }
+    .quizlet-face-label { font-family: 'Orbitron', monospace; font-size: 0.72rem; letter-spacing: 2px; color: var(--starlight); font-weight: 700; }
+    .quizlet-content {
+      flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center;
+      font-size: 1.35rem; font-weight: 600; line-height: 1.5; color: #fff;
+    }
+    .quizlet-content img {
+      max-height: 180px; max-width: 100%; object-fit: contain; margin: 12px auto; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15); display: block;
+    }
+    .quizlet-back-text {
+      text-align: left; font-size: 1.05rem; font-weight: 500; color: #f1f5f9; line-height: 1.6; white-space: pre-wrap;
+    }
+
+    .quizlet-hint {
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; color: var(--text-dim); letter-spacing: 1.5px; text-align: center; margin-top: 14px;
+    }
+
+    .quizlet-controls {
+      display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap;
+    }
+    .quizlet-nav-btn {
+      background: var(--panel-bg); border: 1px solid var(--panel-border); color: #fff;
+      font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+    }
+    .quizlet-nav-btn:hover { border-color: var(--starlight); color: var(--starlight); }
+    .quizlet-grade-group {
+      display: flex; gap: 10px; flex: 1; justify-content: center; min-width: 260px;
+    }
+    .btn-grade {
+      flex: 1; max-width: 180px; padding: 10px 16px; font-family: 'Orbitron', monospace; font-size: 0.78rem; font-weight: 700; border-radius: 8px; cursor: pointer; border: none; transition: all 0.2s;
+    }
+    .btn-grade-knew { background: rgba(52, 211, 153, 0.2); border: 1px solid var(--aurora-green); color: var(--aurora-green); }
+    .btn-grade-knew:hover { background: var(--aurora-green); color: #000; }
+    .btn-grade-missed { background: rgba(244, 63, 94, 0.2); border: 1px solid var(--stellar-rose); color: var(--stellar-rose); }
+    .btn-grade-missed:hover { background: var(--stellar-rose); color: #000; }
+
     .recall-status-tag { font-family: 'Orbitron', monospace; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
     .status-known { background: rgba(52, 211, 153, 0.15); color: var(--aurora-green); border: 1px solid var(--aurora-green); }
     .status-weak { background: rgba(244, 63, 94, 0.15); color: var(--stellar-rose); border: 1px solid var(--stellar-rose); }
     .status-untested { background: rgba(148, 163, 184, 0.15); color: var(--text-dim); border: 1px solid var(--panel-border); }
-
-    .recall-answer-box { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255, 255, 255, 0.1); display: none; }
-    .recall-answer-box.revealed { display: block; }
-
-    .recall-actions { display: flex; gap: 10px; margin-top: 14px; }
-    .btn-recall { flex: 1; padding: 9px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: 700; border: none; }
-    .btn-reveal { background: rgba(56, 189, 248, 0.1); border: 1px solid var(--starlight); color: var(--starlight); width: 100%; margin-top: 10px; }
-    .btn-knew { background: rgba(52, 211, 153, 0.15); border: 1px solid var(--aurora-green); color: var(--aurora-green); }
-    .btn-missed { background: rgba(244, 63, 94, 0.15); border: 1px solid var(--stellar-rose); color: var(--stellar-rose); }
 
     .tier-container { margin-bottom: 24px; }
     .tier-header { font-family: 'Orbitron', monospace; font-size: 0.92rem; padding: 10px 14px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -304,7 +382,7 @@
     .cal-day-lg.active { background: var(--starlight); color: #000; font-weight: 700; }
     .cal-day-lg.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--stellar-rose); }
 
-    /* PREVIOUS LOGS SEPARATE CALENDAR STYLING */
+    /* ARCHIVE & REVISION CALENDAR STYLING */
     .cal-day-lg.archive-has-logs {
       background: rgba(52, 211, 153, 0.15);
       border-color: rgba(52, 211, 153, 0.45);
@@ -337,7 +415,7 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       padding: 1px 4px;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 4px;
     }
     .cal-day-lg.archive-selected .archive-log-count-pill {
@@ -362,6 +440,14 @@
     .rich-editor-box:focus { border-color: var(--starlight); box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
     .rich-editor-box img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); }
 
+    .rich-title-editor {
+      width: 100%; min-height: 44px; background: var(--panel-bg); border: 1px solid var(--panel-border);
+      border-radius: 6px; padding: 10px 14px; color: #fff; font-family: inherit; font-size: 1rem;
+      outline: none; line-height: 1.4;
+    }
+    .rich-title-editor:focus { border-color: var(--starlight); box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
+    .rich-title-editor img { max-height: 90px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
+
     .btn-submit { background: linear-gradient(135deg, var(--starlight), var(--nebula-violet)); color: #000; border: none; padding: 11px 18px; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.85rem; border-radius: 6px; cursor: pointer; width: 100%; }
     .btn-submit.btn-update { background: linear-gradient(135deg, var(--solar-amber), #f97316); }
     .btn-cancel-edit { background: transparent; border: 1px solid var(--text-dim); color: var(--text-dim); padding: 6px 12px; font-family: 'Orbitron', monospace; font-size: 0.75rem; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 8px; display: none; }
@@ -370,6 +456,7 @@
     .entry-item { background: var(--panel-bg); border-left: 3px solid var(--starlight); padding: 14px; border-radius: 0 8px 8px 0; margin-top: 12px; border: 1px solid rgba(255,255,255,0.04); }
     .entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .entry-title { font-weight: 700; color: #fff; font-size: 1.05rem; }
+    .entry-title img { max-height: 90px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
     .entry-body { font-size: 0.9rem; color: var(--text-dim); margin-top: 6px; white-space: pre-wrap; line-height: 1.45; }
     .entry-body img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); }
 
@@ -377,15 +464,6 @@
     .action-btn { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-dim); font-family: 'Orbitron', monospace; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
     .action-btn.edit-btn:hover { border-color: var(--solar-amber); color: var(--solar-amber); }
     .action-btn.del-btn:hover { border-color: var(--stellar-rose); color: var(--stellar-rose); }
-
-    /* SCREENSHOT ATTACH BUTTONS */
-    .screenshot-attach-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .btn-screenshot-upload {
-      background: rgba(56, 189, 248, 0.12); border: 1px dashed var(--starlight); color: var(--starlight);
-      padding: 4px 10px; border-radius: 4px; font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 700;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;
-    }
-    .btn-screenshot-upload:hover { background: rgba(56, 189, 248, 0.25); border-color: #fff; color: #fff; }
 
     /* DICTIONARY LEXICON STYLING FOR WORDS LEARNED */
     .dict-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
@@ -395,6 +473,7 @@
     .dict-word-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--aurora-green); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
     .dict-word-header { display: flex; justify-content: space-between; align-items: center; }
     .dict-word-title { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: #fff; font-weight: 700; }
+    .dict-word-title img { max-height: 80px; max-width: 100%; border-radius: 6px; margin: 4px 0; border: 1px solid rgba(255,255,255,0.1); display: inline-block; vertical-align: middle; }
     .dict-word-pos { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: var(--solar-amber); letter-spacing: 1px; margin-left: 8px; text-transform: uppercase; }
     .dict-word-meaning { font-size: 0.95rem; color: #e2e8f0; margin-top: 6px; line-height: 1.4; }
     .dict-word-meaning img { max-width: 100%; border-radius: 6px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.1); display: block; }
@@ -578,7 +657,7 @@
         <button class="hub-tab" onclick="switchHubView('tags')">TAG STREAMS</button>
       </div>
 
-      <!-- VIEW 1 -->
+      <!-- VIEW 1: EXPLORE MATRIX -->
       <div class="view-panel active-view" id="view-explore">
         <div class="section-bar">
           <div class="section-label">// SUBCATEGORY STREAMS</div>
@@ -698,21 +777,25 @@
         </div>
       </div>
 
-      <!-- VIEW 3: REVISION -->
+      <!-- VIEW 3: REVISION TERMINAL (QUIZLET FLASHCARD PLAYER) -->
       <div class="view-panel" id="view-revision">
-        <div class="section-bar"><div class="section-label">// MANDATORY ACTIVE RECALL PROTOCOL</div></div>
+        <div class="section-bar"><div class="section-label">// ACTIVE RECALL PROTOCOL // QUIZLET RUNNER</div></div>
         <div class="rev-nav">
-          <button class="rev-btn active-rev" id="rev-mode-prev" onclick="setRevisionMode('prev')">PREVIOUS DAY</button>
+          <button class="rev-btn active-rev" id="rev-mode-prev" onclick="setRevisionMode('prev')">PREVIOUS DAY (<span id="prev-day-count">0</span>)</button>
+          <button class="rev-btn" id="rev-mode-untested" onclick="setRevisionMode('untested')">UNTESTED (<span id="untested-count">0</span>)</button>
           <button class="rev-btn" id="rev-mode-random" onclick="setRevisionMode('random')">RANDOM QUIZZER</button>
           <button class="rev-btn" id="rev-mode-known" onclick="setRevisionMode('known')">KNOWN FACTS (<span id="known-count">0</span>)</button>
           <button class="rev-btn" id="rev-mode-failed" onclick="setRevisionMode('failed')">WEAK AREAS (<span id="weak-count">0</span>)</button>
-          <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
-            <span style="font-size:0.75rem; color:var(--text-dim); font-family:'Orbitron', monospace;">SELECT DATE:</span>
-            <select id="rev-date-picker" class="rev-select" onchange="onRevisionDatePicked(this.value)"><option value="">-- Choose Log Date --</option></select>
+          
+          <div style="margin-left:auto;">
+            <button class="rev-btn rev-cal-btn" onclick="openRevisionCalendarModal()">📅 CHOOSE LOG DATE</button>
           </div>
         </div>
-        <div id="revision-deck-header" style="font-family:'Orbitron', monospace; font-size:0.85rem; color:var(--starlight); margin-bottom:14px;"></div>
-        <div id="revision-deck-container"></div>
+        
+        <div id="revision-deck-header" style="font-family:'Orbitron', monospace; font-size:0.85rem; color:var(--starlight); margin-bottom:16px;"></div>
+        
+        <!-- SINGLE FLASHCARD RUNNER CONTAINER -->
+        <div id="quizlet-container"></div>
       </div>
 
       <!-- VIEW 4: RECENT -->
@@ -757,7 +840,6 @@
           <button class="close-btn" onclick="closeModal()">&times;</button>
         </div>
 
-        <!-- SUB-NAVIGATION BAR BESIDE CALENDAR -->
         <div class="modal-sub-nav">
           <button class="modal-nav-tab active" id="modal-tab-logger" onclick="switchModalMode('logger')">📅 CALENDAR LOGGER</button>
           <button class="modal-nav-tab" id="modal-tab-archive" onclick="switchModalMode('archive')">📂 PREVIOUS LOGS ARCHIVE</button>
@@ -780,12 +862,17 @@
 
             <div class="step-editor" id="modal-step-2">
               <div class="date-banner">
-                <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-09-18</div></div>
+                <div><span style="font-size:0.75rem; color:var(--text-dim);">ACTIVE DATE:</span><div class="date-badge" id="editor-active-date">2026-09-21</div></div>
                 <button class="back-step-btn" onclick="goToStep(1)">CHANGE DATE</button>
               </div>
               <form id="entry-form" onsubmit="saveEntry(event)">
                 <input type="hidden" id="edit-entry-id" value="" />
-                <div class="form-group"><label>Concept / Title</label><input type="text" id="entry-title" required /></div>
+                
+                <div class="form-group">
+                  <label>Concept / Title (Ctrl+V / Cmd+V to paste screenshot)</label>
+                  <div id="entry-title" class="rich-title-editor" contenteditable="true" placeholder="Enter topic title or paste screenshot..."></div>
+                </div>
+
                 <div id="difficulty-group" class="form-group" style="display:none;">
                   <label>Concept Difficulty Rating</label>
                   <div class="difficulty-select-group" style="display:flex; gap:10px;">
@@ -797,13 +884,7 @@
                 </div>
                 
                 <div class="form-group">
-                  <div class="screenshot-attach-bar">
-                    <label style="margin-bottom:0;">Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshot)</label>
-                    <div>
-                      <button type="button" class="btn-screenshot-upload" onclick="triggerConceptImageUpload()">📷 Attach / Upload Screenshot</button>
-                      <input type="file" id="concept-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'entry-content')" />
-                    </div>
-                  </div>
+                  <label>Notes & High-Yield Summary (Ctrl+V / Cmd+V to paste screenshot)</label>
                   <div id="entry-content" class="rich-editor-box" contenteditable="true"></div>
                 </div>
 
@@ -816,7 +897,7 @@
             </div>
           </div>
 
-          <!-- SUB-VIEW B: PREVIOUS LOGS SEPARATE CALENDAR -->
+          <!-- SUB-VIEW B: PREVIOUS LOGS ARCHIVE CALENDAR -->
           <div id="modal-view-archive" style="display:none;">
             <div class="step-calendar">
               <div class="step-guide">// TAP ANY NUMBER OR HIGHLIGHTED DAY CARD TO INSTANTLY VIEW LOGS</div>
@@ -859,8 +940,8 @@
               <input type="hidden" id="dict-entry-id" value="" />
               <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px; margin-bottom:12px;">
                 <div>
-                  <label>Word / Term</label>
-                  <input type="text" id="dict-word" placeholder="e.g., Idiopathic" required />
+                  <label>Word / Term (Ctrl+V to paste screenshot)</label>
+                  <div id="dict-word" class="rich-title-editor" contenteditable="true" placeholder="e.g., Idiopathic"></div>
                 </div>
                 <div>
                   <label>Part of Speech</label>
@@ -868,13 +949,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="screenshot-attach-bar">
-                  <label style="margin-bottom:0;">Meaning & Clinical Context</label>
-                  <div>
-                    <button type="button" class="btn-screenshot-upload" onclick="triggerDictImageUpload()">📷 Attach / Upload Diagram</button>
-                    <input type="file" id="dict-file-input" accept="image/*" style="display:none;" onchange="handleManualImageUpload(event, 'dict-meaning-editor')" />
-                  </div>
-                </div>
+                <label>Meaning & Clinical Context (Ctrl+V to paste screenshot)</label>
                 <div id="dict-meaning-editor" class="rich-editor-box" contenteditable="true" style="min-height:90px;" placeholder="Definition, derivation, or high-yield mnemonic..."></div>
               </div>
               <div class="form-group">
@@ -890,6 +965,29 @@
 
           <div style="font-family:'Orbitron', monospace; font-size:0.8rem; color:var(--text-dim); margin-bottom:12px;">// CATALOGED VOCABULARY</div>
           <div id="dict-words-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVISION TERMINAL CALENDAR MODAL -->
+    <div class="modal-overlay" id="rev-cal-modal-overlay">
+      <div class="modal wide-mode" style="max-width: 620px;">
+        <div class="modal-header">
+          <h2>📅 SELECT REVISION LOG DATE</h2>
+          <button class="close-btn" onclick="closeRevisionCalendarModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="step-calendar">
+            <div class="step-guide">// DATES WITH LOGS ARE HIGHLIGHTED — TAP A DATE TO REVISE THAT DECK</div>
+            <div class="calendar-large">
+              <div class="cal-header-large">
+                <button class="cal-nav-btn-lg" onclick="changeRevCalendarMonth(-1)">&lt;</button>
+                <span id="cal-month-year-rev">Month Year</span>
+                <button class="cal-nav-btn-lg" onclick="changeRevCalendarMonth(1)">&gt;</button>
+              </div>
+              <div class="cal-grid-large" id="cal-grid-rev"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1181,6 +1279,20 @@
     function getReviewedDays() { return JSON.parse(localStorage.getItem(getReviewedDaysKey()) || '[]'); }
     function saveReviewedDays(days) { localStorage.setItem(getReviewedDaysKey(), JSON.stringify(days)); pushToCloud(); }
 
+    /* SANITIZER: Clean foreign Angular comments, footnotes & framework spans from pasted text */
+    function sanitizeContent(html) {
+      if (!html) return '';
+      let clean = html;
+      // Remove HTML comments
+      clean = clean.replace(/<!--[\s\S]*?-->/g, '');
+      // Remove Angular/Google custom source-footnote elements
+      clean = clean.replace(/<source-footnote[\s\S]*?<\/source-footnote>/gi, '');
+      // Remove generic wrapper spans while retaining internal text
+      clean = clean.replace(/<span\s+data-path-to-node[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+      clean = clean.replace(/<span\s+class="ng-[^>]*">([\s\S]*?)<\/span>/gi, '$1');
+      return clean.trim();
+    }
+
     async function handleSingleLogin(e) {
       e.preventDefault();
       const u = document.getElementById('auth-username').value.trim();
@@ -1333,6 +1445,7 @@
       dictEditingId = null;
       document.getElementById('dict-form').reset();
       document.getElementById('dict-entry-id').value = '';
+      document.getElementById('dict-word').innerHTML = '';
       document.getElementById('dict-meaning-editor').innerHTML = '';
       document.getElementById('dict-form-wrapper').style.display = 'none';
       document.getElementById('dict-toggle-form-btn').textContent = '+ ADD NEW WORD';
@@ -1343,18 +1456,23 @@
 
     function saveDictionaryWord(e) {
       e.preventDefault();
-      const word = document.getElementById('dict-word').value.trim();
+      const wordHTML = sanitizeContent(document.getElementById('dict-word').innerHTML);
       const pos = document.getElementById('dict-pos').value.trim();
-      const meaningHTML = document.getElementById('dict-meaning-editor').innerHTML.trim();
+      const meaningHTML = sanitizeContent(document.getElementById('dict-meaning-editor').innerHTML);
       const tags = document.getElementById('dict-tags').value.trim();
       let data = getAllData();
+
+      if (!wordHTML) {
+        alert("Please enter a word or paste a title screenshot.");
+        return;
+      }
 
       const formattedContent = pos ? `<em>(${escapeHtml(pos)})</em> ${meaningHTML}` : meaningHTML;
 
       if (dictEditingId) {
         data = data.map(item => item.id === dictEditingId ? {
           ...item,
-          title: word,
+          title: wordHTML,
           pos: pos,
           meaning: meaningHTML,
           content: formattedContent,
@@ -1367,7 +1485,7 @@
           id: Date.now(),
           category: 'Words Learned',
           date: getEstDateString(),
-          title: word,
+          title: wordHTML,
           pos: pos,
           meaning: meaningHTML,
           content: formattedContent,
@@ -1388,14 +1506,14 @@
       if (!entry) return;
       dictEditingId = id;
       document.getElementById('dict-entry-id').value = id;
-      document.getElementById('dict-word').value = entry.title || '';
+      document.getElementById('dict-word').innerHTML = entry.title || '';
       document.getElementById('dict-pos').value = entry.pos || '';
       document.getElementById('dict-meaning-editor').innerHTML = entry.meaning || entry.content || '';
       document.getElementById('dict-tags').value = entry.tags || '';
 
       document.getElementById('dict-form-wrapper').style.display = 'block';
       document.getElementById('dict-toggle-form-btn').textContent = '− EDITING WORD';
-      document.getElementById('dict-form-header').textContent = `// EDIT DEFINITION: ${entry.title}`;
+      document.getElementById('dict-form-header').textContent = `// EDIT DEFINITION`;
       const sb = document.getElementById('dict-submit-btn');
       sb.textContent = 'UPDATE DEFINITION';
       sb.classList.add('btn-update');
@@ -1424,7 +1542,7 @@
           <div class="dict-word-card">
             <div class="dict-word-header">
               <div>
-                <span class="dict-word-title">${escapeHtml(item.title)}</span>
+                <span class="dict-word-title">${item.title}</span>
                 ${item.pos ? `<span class="dict-word-pos">(${escapeHtml(item.pos)})</span>` : ''}
               </div>
               <div class="entry-actions">
@@ -1439,62 +1557,6 @@
       }).join('');
     }
     /* ================== END WORDS LEARNED ================== */
-
-    /* ================== SCREENSHOT UPLOAD HELPERS ================== */
-    function triggerConceptImageUpload() {
-      const input = document.getElementById('concept-file-input');
-      if (input) input.click();
-    }
-
-    function triggerDictImageUpload() {
-      const input = document.getElementById('dict-file-input');
-      if (input) input.click();
-    }
-
-    async function handleManualImageUpload(event, targetContainerId) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const container = document.getElementById(targetContainerId);
-      if (!container) return;
-
-      // Insert placeholder
-      const placeholder = document.createElement('div');
-      placeholder.style.color = 'var(--starlight)';
-      placeholder.style.fontFamily = "'Orbitron', monospace";
-      placeholder.style.fontSize = '0.75rem';
-      placeholder.textContent = '[Uploading screenshot to cloud...]';
-      container.appendChild(placeholder);
-
-      try {
-        if (!window.__fb || !window.__fb.storage) {
-          throw new Error("Firebase Storage is not initialized.");
-        }
-        const { storage, ref, uploadBytes, getDownloadURL } = window.__fb;
-        const filename = `screenshots/${Date.now()}_${file.name || 'upload.png'}`;
-        const storageRef = ref(storage, filename);
-
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-
-        const img = document.createElement('img');
-        img.src = downloadURL;
-        img.alt = "Cloud Screenshot";
-        img.style.maxWidth = "100%";
-        img.style.borderRadius = "6px";
-        img.style.margin = "8px 0";
-        img.style.border = "1px solid rgba(255,255,255,0.1)";
-
-        container.replaceChild(img, placeholder);
-      } catch (err) {
-        console.error("Screenshot upload failed:", err);
-        placeholder.textContent = '[Error uploading screenshot to cloud]';
-        placeholder.style.color = 'var(--stellar-rose)';
-      } finally {
-        event.target.value = ''; // Reset input so same image can be reselected if needed
-      }
-    }
-    /* ================== END SCREENSHOT HELPERS ================== */
 
     /* ================== 100 BIBLE VERSES & DAILY TOPICS ================== */
     const BIBLE_VERSES = [
@@ -1651,7 +1713,14 @@
       else { document.body.classList.remove('theme-study'); document.getElementById('theme-btn-label').textContent = 'STUDY MODE'; }
     }
 
-    let currentCategory = '', selectedDate = getEstDateString(), calDate = new Date(), calArchiveDate = new Date(), archiveSelectedDate = null, editingId = null, currentModalStep = 1, selectedDiff = 'Medium', currentRevMode = 'prev';
+    let currentCategory = '', selectedDate = getEstDateString(), calDate = new Date(), calArchiveDate = new Date(), calRevDate = new Date(), archiveSelectedDate = null, editingId = null, currentModalStep = 1, selectedDiff = 'Medium';
+    
+    // QUIZLET FLASHCARD STATE
+    let currentRevMode = 'prev';
+    let currentRevCustomDate = null;
+    let activeDeck = [];
+    let currentCardIndex = 0;
+    let isCurrentCardFlipped = false;
 
     function switchHubView(viewName) {
       document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
@@ -1707,7 +1776,7 @@
         header.textContent = `${filtered.length} LOG${filtered.length === 1 ? '' : 'S'} TAGGED ${activeTagFilter.toUpperCase()}`;
         list.innerHTML = filtered.length ? filtered.map(i => `
           <div class="entry-item">
-            <div class="entry-title">${escapeHtml(i.title)} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div>
+            <div class="entry-title">${i.title} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div>
             <div class="entry-body">${i.content}</div>
           </div>
         `).join('') : '<div style="color:var(--text-dim);">No logs for this tag.</div>';
@@ -1814,116 +1883,215 @@
       if (profileXpLabel) profileXpLabel.textContent = `${xp.toFixed(0)} XP`;
     }
 
-    /* ================== REVISION VIEW ================== */
+    /* =========================================================
+       REVISION TERMINAL // QUIZLET-STYLE FLASHCARD SYSTEM
+       ========================================================= */
     function setRevisionMode(mode) {
       currentRevMode = mode;
+      currentCardIndex = 0;
+      isCurrentCardFlipped = false;
       document.querySelectorAll('.rev-btn').forEach(b => b.classList.remove('active-rev'));
       if (mode === 'prev') document.getElementById('rev-mode-prev').classList.add('active-rev');
+      if (mode === 'untested') document.getElementById('rev-mode-untested').classList.add('active-rev');
       if (mode === 'random') document.getElementById('rev-mode-random').classList.add('active-rev');
       if (mode === 'failed') document.getElementById('rev-mode-failed').classList.add('active-rev');
       if (mode === 'known') document.getElementById('rev-mode-known').classList.add('active-rev');
       renderRevisionView();
     }
 
-    function onRevisionDatePicked(val) {
-      if (!val) return;
-      currentRevMode = 'custom_date';
-      renderRevisionView(val);
+    function openRevisionCalendarModal() {
+      document.getElementById('rev-cal-modal-overlay').classList.add('active');
+      renderRevisionCalendar();
     }
 
-    function populateRevisionDateDropdown() {
-      const select = document.getElementById('rev-date-picker');
-      if (!select) return;
-      const medDates = [...new Set(getAllData().filter(i => i.category === 'Medicine Concepts').map(i => i.date))].sort().reverse();
-      select.innerHTML = '<option value="">-- Choose Log Date --</option>' + medDates.map(d => `<option value="${d}">${d}</option>`).join('');
+    function closeRevisionCalendarModal() {
+      document.getElementById('rev-cal-modal-overlay').classList.remove('active');
+    }
+
+    function changeRevCalendarMonth(delta) {
+      calRevDate.setMonth(calRevDate.getMonth() + delta);
+      renderRevisionCalendar();
+    }
+
+    function renderRevisionCalendar() {
+      const grid = document.getElementById('cal-grid-rev');
+      if (!grid) return;
+      grid.innerHTML = '';
+      const year = calRevDate.getFullYear(), month = calRevDate.getMonth();
+      document.getElementById('cal-month-year-rev').textContent = `${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][month]} ${year}`;
+
+      ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].forEach(d => grid.innerHTML += `<div class="cal-day-label-lg">${d}</div>`);
+      const first = new Date(year, month, 1).getDay(), total = new Date(year, month + 1, 0).getDate();
+      for (let i = 0; i < first; i++) grid.appendChild(document.createElement('div'));
+
+      const medData = getAllData().filter(i => i.category === 'Medicine Concepts');
+
+      for (let day = 1; day <= total; day++) {
+        const ds = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayLogs = medData.filter(i => i.date === ds);
+        const hasLogs = dayLogs.length > 0;
+        const isSelected = ds === currentRevCustomDate;
+
+        const el = document.createElement('div');
+        el.className = `cal-day-lg ${hasLogs ? 'archive-has-logs' : ''} ${isSelected ? 'archive-selected' : ''}`;
+        el.innerHTML = `
+          <span class="archive-day-number">${day}</span>
+          ${hasLogs ? `<span class="archive-log-count-pill">${dayLogs.length} LOG${dayLogs.length === 1 ? '' : 'S'}</span>` : ''}
+        `;
+        
+        el.onclick = () => {
+          if (!hasLogs) {
+            alert(`No Medicine Concept logs recorded on ${ds}.`);
+            return;
+          }
+          currentRevCustomDate = ds;
+          currentRevMode = 'custom_date';
+          currentCardIndex = 0;
+          isCurrentCardFlipped = false;
+          document.querySelectorAll('.rev-btn').forEach(b => b.classList.remove('active-rev'));
+          closeRevisionCalendarModal();
+          renderRevisionView(ds);
+        };
+        grid.appendChild(el);
+      }
     }
 
     function renderRevisionView(customDate = null) {
-      const container = document.getElementById('revision-deck-container'), header = document.getElementById('revision-deck-header');
+      const container = document.getElementById('quizlet-container');
+      const header = document.getElementById('revision-deck-header');
       const medData = getAllData().filter(i => i.category === 'Medicine Concepts');
       const weakIds = getWeakIds();
       const knownIds = getKnownIds();
-      document.getElementById('weak-count').textContent = weakIds.length;
-      document.getElementById('known-count').textContent = knownIds.length;
-      populateRevisionDateDropdown();
 
-      let targetDeck = [];
-      let isKnownDeck = false;
+      const untestedItems = medData.filter(i => !knownIds.includes(i.id) && !weakIds.includes(i.id));
 
       const todayStr = getEstDateString();
-      const allDates = [...new Set(medData.map(i => i.date))].filter(d => d < todayStr).sort().reverse();
-      const autoPrevDate = allDates.length ? allDates[0] : null;
+      const allPastDates = [...new Set(medData.map(i => i.date))].filter(d => d < todayStr).sort().reverse();
+      const autoPrevDate = allPastDates.length ? allPastDates[0] : null;
+      const prevDayLogs = autoPrevDate ? medData.filter(i => i.date === autoPrevDate) : [];
+
+      // Update HUD counters
+      document.getElementById('weak-count').textContent = weakIds.length;
+      document.getElementById('known-count').textContent = knownIds.length;
+      document.getElementById('untested-count').textContent = untestedItems.length;
+      document.getElementById('prev-day-count').textContent = prevDayLogs.length;
+
+      let deckTitle = '';
 
       if (currentRevMode === 'prev') {
-        if (autoPrevDate) {
-          header.textContent = `REVISION DECK // PREVIOUS DAY (${autoPrevDate})`;
-          targetDeck = medData.filter(i => i.date === autoPrevDate);
-        } else {
-          header.textContent = 'NO PREVIOUS DAY LOGS FOUND';
-          targetDeck = [];
-        }
+        activeDeck = prevDayLogs;
+        deckTitle = autoPrevDate ? `PREVIOUS DAY (${autoPrevDate})` : 'PREVIOUS DAY (NO LOGS)';
+      } else if (currentRevMode === 'untested') {
+        activeDeck = untestedItems;
+        deckTitle = 'UNTESTED CONCEPTS';
       } else if (currentRevMode === 'random') {
-        header.textContent = 'RANDOM QUIZ'; targetDeck = [...medData].sort(() => 0.5 - Math.random()).slice(0, 5);
+        if (!activeDeck.length || currentCardIndex === 0) {
+          activeDeck = [...medData].sort(() => 0.5 - Math.random()).slice(0, 10);
+        }
+        deckTitle = 'RANDOM QUIZZER';
       } else if (currentRevMode === 'failed') {
-        header.textContent = 'WEAK AREAS'; targetDeck = medData.filter(i => weakIds.includes(i.id));
+        activeDeck = medData.filter(i => weakIds.includes(i.id));
+        deckTitle = 'WEAK AREAS';
       } else if (currentRevMode === 'known') {
-        header.textContent = 'KNOWN FACTS — THINGS YOU\'VE GOT DOWN'; targetDeck = medData.filter(i => knownIds.includes(i.id)); isKnownDeck = true;
-      } else if (customDate) {
-        header.textContent = `REVISION DECK // ${customDate}`; targetDeck = medData.filter(i => i.date === customDate);
+        activeDeck = medData.filter(i => knownIds.includes(i.id));
+        deckTitle = 'KNOWN FACTS';
+      } else if (customDate || currentRevCustomDate) {
+        const d = customDate || currentRevCustomDate;
+        activeDeck = medData.filter(i => i.date === d);
+        deckTitle = `LOGGED DATE: ${d}`;
       }
 
-      if (isKnownDeck) {
-        container.innerHTML = targetDeck.length ? targetDeck.map(item => `
-          <div class="recall-card" id="card-node-${item.id}" style="border-left-color: var(--aurora-green);">
-            <div class="recall-header">
-              <div class="recall-title">${escapeHtml(item.title)}</div>
-              <span class="recall-status-tag status-known">KNOWN FACT</span>
-            </div>
-            <div style="margin-top:10px; color:var(--text-dim); line-height:1.5;">${item.content}</div>
-            <div class="recall-actions">
-              <button class="btn-recall btn-missed" onclick="markRecallKnowledge(${item.id}, false)">MOVE TO WEAK AREAS</button>
-            </div>
+      header.textContent = `// ACTIVE DECK: ${deckTitle} — ${activeDeck.length} CARDS`;
+
+      if (!activeDeck.length) {
+        container.innerHTML = `
+          <div style="background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:12px; padding:40px 20px; text-align:center; color:var(--text-dim);">
+            <div style="font-family:'Orbitron', monospace; font-size:1.1rem; color:var(--starlight); margin-bottom:8px;">DECK EMPTY</div>
+            <div>There are no flashcards under this filter right now.</div>
           </div>
-        `).join('') : '<div style="color:var(--text-dim); padding:16px;">Nothing marked as known yet.</div>';
+        `;
         return;
       }
 
-      container.innerHTML = targetDeck.length ? targetDeck.map(item => {
-        let statusTagHtml = '';
-        if (knownIds.includes(item.id)) {
-          statusTagHtml = `<span class="recall-status-tag status-known">KNOWN FACT</span>`;
-        } else if (weakIds.includes(item.id)) {
-          statusTagHtml = `<span class="recall-status-tag status-weak">WEAK AREA</span>`;
-        } else {
-          statusTagHtml = `<span class="recall-status-tag status-untested">UNTESTED</span>`;
-        }
+      if (currentCardIndex >= activeDeck.length) currentCardIndex = activeDeck.length - 1;
+      if (currentCardIndex < 0) currentCardIndex = 0;
 
-        return `
-          <div class="recall-card" id="card-node-${item.id}">
-            <div class="recall-header">
-              <div class="recall-title">${escapeHtml(item.title)}</div>
-              ${statusTagHtml}
-            </div>
-            <button class="btn-recall btn-reveal" id="reveal-btn-${item.id}" onclick="toggleRecallAnswer(${item.id})">REVEAL SUMMARY</button>
-            <div class="recall-answer-box" id="answer-node-${item.id}">
-              <div>${item.content}</div>
-              <div class="recall-actions">
-                <button class="btn-recall btn-knew" onclick="markRecallKnowledge(${item.id}, true)">✓ KNEW IT</button>
-                <button class="btn-recall btn-missed" onclick="markRecallKnowledge(${item.id}, false)">✗ MISSED</button>
+      const card = activeDeck[currentCardIndex];
+
+      let statusBadge = '';
+      if (knownIds.includes(card.id)) {
+        statusBadge = `<span class="recall-status-tag status-known">KNOWN FACT</span>`;
+      } else if (weakIds.includes(card.id)) {
+        statusBadge = `<span class="recall-status-tag status-weak">WEAK AREA</span>`;
+      } else {
+        statusBadge = `<span class="recall-status-tag status-untested">UNTESTED</span>`;
+      }
+
+      container.innerHTML = `
+        <div class="quizlet-runner">
+          <div class="quizlet-top-bar">
+            <span class="quizlet-deck-name">${deckTitle}</span>
+            <span class="quizlet-counter">CARD ${currentCardIndex + 1} / ${activeDeck.length}</span>
+          </div>
+
+          <!-- 3D FLIPPABLE FLASHCARD -->
+          <div class="quizlet-card-stage ${isCurrentCardFlipped ? 'flipped' : ''}" id="quizlet-stage" onclick="toggleCardFlip()">
+            
+            <!-- FRONT FACE -->
+            <div class="quizlet-face quizlet-face-front">
+              <div class="quizlet-header">
+                <span class="quizlet-face-label">// QUESTION / CONCEPT</span>
+                <div>${statusBadge}</div>
               </div>
+              <div class="quizlet-content">
+                <div>${card.title}</div>
+              </div>
+              <div class="quizlet-hint">TAP TO FLIP TO ANSWER ⟳</div>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="quizlet-face quizlet-face-back">
+              <div class="quizlet-header">
+                <span class="quizlet-face-label" style="color:var(--aurora-green)">// HIGH-YIELD SUMMARY</span>
+                <div>${statusBadge}</div>
+              </div>
+              <div class="quizlet-content" style="justify-content:flex-start;">
+                <div class="quizlet-back-text">${card.content}</div>
+              </div>
+              <div class="quizlet-hint">TAP TO FLIP BACK ⟲</div>
             </div>
           </div>
-        `;
-      }).join('') : '<div style="color:var(--text-dim); padding:16px;">No items found for this revision deck.</div>';
+
+          <!-- CONTROLS & NAVIGATION -->
+          <div class="quizlet-controls">
+            <button class="quizlet-nav-btn" onclick="navigateCard(-1)">&larr; PREV</button>
+
+            <div class="quizlet-grade-group">
+              <button class="btn-grade btn-grade-missed" onclick="markCardKnowledge(${card.id}, false)">✗ MISSED</button>
+              <button class="btn-grade btn-grade-knew" onclick="markCardKnowledge(${card.id}, true)">✓ KNEW IT</button>
+            </div>
+
+            <button class="quizlet-nav-btn" onclick="navigateCard(1)">NEXT &rarr;</button>
+          </div>
+        </div>
+      `;
     }
 
-    function toggleRecallAnswer(id) {
-      const box = document.getElementById(`answer-node-${id}`), btn = document.getElementById(`reveal-btn-${id}`);
-      box.classList.toggle('revealed');
-      btn.textContent = box.classList.contains('revealed') ? 'HIDE SUMMARY' : 'REVEAL SUMMARY';
+    function toggleCardFlip() {
+      isCurrentCardFlipped = !isCurrentCardFlipped;
+      const stage = document.getElementById('quizlet-stage');
+      if (stage) stage.classList.toggle('flipped', isCurrentCardFlipped);
     }
 
-    function markRecallKnowledge(id, knewIt) {
+    function navigateCard(direction) {
+      isCurrentCardFlipped = false;
+      currentCardIndex += direction;
+      if (currentCardIndex < 0) currentCardIndex = activeDeck.length - 1;
+      if (currentCardIndex >= activeDeck.length) currentCardIndex = 0;
+      renderRevisionView();
+    }
+
+    function markCardKnowledge(id, knewIt) {
       let weak = getWeakIds();
       let known = getKnownIds();
       if (knewIt) {
@@ -1937,8 +2105,27 @@
         saveKnownIds(known);
         saveWeakIds(weak);
       }
+      
+      // Auto-advance to next card Quizlet-style
+      isCurrentCardFlipped = false;
+      currentCardIndex++;
       renderRevisionView();
     }
+
+    // Keyboard support for Quizlet mode (Space = Flip, Left = Prev, Right = Next)
+    window.addEventListener('keydown', (e) => {
+      const revPanel = document.getElementById('view-revision');
+      if (revPanel && revPanel.classList.contains('active-view') && activeDeck.length) {
+        if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          toggleCardFlip();
+        } else if (e.code === 'ArrowRight') {
+          navigateCard(1);
+        } else if (e.code === 'ArrowLeft') {
+          navigateCard(-1);
+        }
+      }
+    });
 
     function selectDifficulty(diff) {
       selectedDiff = diff;
@@ -2102,7 +2289,7 @@
       container.innerHTML = filtered.length ? filtered.map(i => `
         <div class="entry-item" style="border-left-color: var(--aurora-green); background: rgba(15, 23, 42, 0.9);">
           <div class="entry-header">
-            <div class="entry-title">${escapeHtml(i.title)}</div>
+            <div class="entry-title">${i.title}</div>
             <div class="entry-actions">
               <button class="action-btn edit-btn" onclick="openAndEditFromArchive(${i.id}, '${i.date}')">EDIT IN LOGGER</button>
               <button class="action-btn del-btn" onclick="deleteEntry(${i.id})">DEL</button>
@@ -2145,21 +2332,27 @@
 
     function saveEntry(e) {
       e.preventDefault();
-      const title = document.getElementById('entry-title').value;
-      const content = document.getElementById('entry-content').innerHTML;
+      const titleHTML = sanitizeContent(document.getElementById('entry-title').innerHTML);
+      const content = sanitizeContent(document.getElementById('entry-content').innerHTML);
       const tags = document.getElementById('entry-tags').value;
       const diff = currentCategory === 'Medicine Concepts' ? document.getElementById('entry-difficulty').value : null;
       let data = getAllData();
 
+      if (!titleHTML) {
+        alert("Please enter a concept/title or paste a screenshot.");
+        return;
+      }
+
       if (editingId) {
-        data = data.map(item => item.id === editingId ? { ...item, title, content, tags, difficulty: diff, lastModified: Date.now() } : item);
+        data = data.map(item => item.id === editingId ? { ...item, title: titleHTML, content, tags, difficulty: diff, lastModified: Date.now() } : item);
         cancelEditing();
       } else {
-        data.push({ id: Date.now(), category: currentCategory, date: selectedDate, title, content, tags, difficulty: diff || 'Medium', lastModified: Date.now() });
+        data.push({ id: Date.now(), category: currentCategory, date: selectedDate, title: titleHTML, content, tags, difficulty: diff || 'Medium', lastModified: Date.now() });
         addXP(2.5);
       }
       saveAllData(data);
       document.getElementById('entry-form').reset();
+      document.getElementById('entry-title').innerHTML = '';
       document.getElementById('entry-content').innerHTML = '';
       renderEntries(); 
       renderArchiveCalendar();
@@ -2170,7 +2363,7 @@
       const entry = getAllData().find(i => i.id === id);
       if (!entry) return;
       editingId = id;
-      document.getElementById('entry-title').value = entry.title;
+      document.getElementById('entry-title').innerHTML = entry.title || '';
       document.getElementById('entry-content').innerHTML = entry.content || '';
       document.getElementById('entry-tags').value = entry.tags || '';
       if (entry.category === 'Medicine Concepts') selectDifficulty(entry.difficulty || 'Medium');
@@ -2182,6 +2375,7 @@
     function cancelEditing() {
       editingId = null;
       document.getElementById('entry-form').reset();
+      document.getElementById('entry-title').innerHTML = '';
       document.getElementById('entry-content').innerHTML = '';
       const sb = document.getElementById('submit-btn');
       sb.textContent = 'LOG ENTRY TO ARCHIVE'; sb.classList.remove('btn-update');
@@ -2207,7 +2401,7 @@
       container.innerHTML = filtered.length ? filtered.map(i => `
         <div class="entry-item">
           <div class="entry-header">
-            <div class="entry-title">${escapeHtml(i.title)}</div>
+            <div class="entry-title">${i.title}</div>
             <div class="entry-actions">
               <button class="action-btn edit-btn" onclick="startEdit(${i.id})">EDIT</button>
               <button class="action-btn del-btn" onclick="deleteEntry(${i.id})">DEL</button>
@@ -2221,7 +2415,7 @@
     function renderRecentLogs() {
       const list = document.getElementById('recent-logs-list');
       const sorted = [...getAllData()].sort((a, b) => (b.lastModified || b.id) - (a.lastModified || a.id)).slice(0, 20);
-      list.innerHTML = sorted.length ? sorted.map(i => `<div class="entry-item"><div class="entry-title">${escapeHtml(i.title)} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div><div class="entry-body">${i.content}</div></div>`).join('') : '<div style="color:var(--text-dim);">No logs yet.</div>';
+      list.innerHTML = sorted.length ? sorted.map(i => `<div class="entry-item"><div class="entry-title">${i.title} <span style="font-size:0.75rem; color:var(--starlight);">[${i.category} - ${i.date}]</span></div><div class="entry-body">${i.content}</div></div>`).join('') : '<div style="color:var(--text-dim);">No logs yet.</div>';
     }
 
     function renderMasteryMatrix() {
@@ -2230,9 +2424,9 @@
       document.getElementById('count-diff-hard').textContent = `${hard.length} TOPICS`;
       document.getElementById('count-diff-med').textContent = `${medT.length} TOPICS`;
       document.getElementById('count-diff-easy').textContent = `${easy.length} TOPICS`;
-      document.getElementById('tier-list-hard').innerHTML = hard.length ? hard.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
-      document.getElementById('tier-list-med').innerHTML = medT.length ? medT.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
-      document.getElementById('tier-list-easy').innerHTML = easy.length ? easy.map(i => `<div class="entry-item">${escapeHtml(i.title)}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-hard').innerHTML = hard.length ? hard.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-med').innerHTML = medT.length ? medT.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
+      document.getElementById('tier-list-easy').innerHTML = easy.length ? easy.map(i => `<div class="entry-item">${i.title}</div>`).join('') : '<div style="color:var(--text-dim);">No items.</div>';
     }
 
     function updateAllViews() {
@@ -2244,21 +2438,29 @@
         }
       });
       renderMilestoneProgress(); renderRecentLogs(); renderMasteryMatrix();
+      if (document.getElementById('view-revision').classList.contains('active-view')) renderRevisionView();
     }
 
     function handleSearch(q) {
       const panel = document.getElementById('search-panel'), list = document.getElementById('search-results-list');
       if (!q.trim()) { panel.classList.remove('active'); return; }
-      const res = getAllData().filter(i => (i.title || '').toLowerCase().includes(q.toLowerCase()) || (i.content || '').toLowerCase().includes(q.toLowerCase()));
+      
+      const queryLower = q.toLowerCase();
+      const res = getAllData().filter(i => {
+        const plainTitle = (i.title || '').replace(/<[^>]*>?/gm, '').toLowerCase();
+        const plainContent = (i.content || '').replace(/<[^>]*>?/gm, '').toLowerCase();
+        return plainTitle.includes(queryLower) || plainContent.includes(queryLower);
+      });
+
       panel.classList.add('active');
-      list.innerHTML = res.length ? res.map(i => `<div class="entry-item"><strong>${escapeHtml(i.title)}</strong><br/>${i.content}</div>`).join('') : 'No matches.';
+      list.innerHTML = res.length ? res.map(i => `<div class="entry-item"><strong>${i.title}</strong><br/>${i.content}</div>`).join('') : 'No matches.';
     }
 
     function escapeHtml(str) { return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : ''; }
 
     /* ================== FIREBASE STORAGE CLIPBOARD PASTE ================== */
     document.addEventListener('DOMContentLoaded', () => {
-      ['entry-content', 'dict-meaning-editor'].forEach(editorId => {
+      ['entry-title', 'entry-content', 'dict-word', 'dict-meaning-editor'].forEach(editorId => {
         const editor = document.getElementById(editorId);
         if (editor) {
           editor.addEventListener('paste', async function(e) {
@@ -2275,7 +2477,7 @@
                 
                 const placeholderSpan = document.createElement('span');
                 placeholderSpan.style.color = 'var(--starlight)';
-                placeholderSpan.textContent = '[Uploading screenshot to cloud...]';
+                placeholderSpan.textContent = '[Uploading screenshot...]';
                 range.insertNode(placeholderSpan);
 
                 try {
@@ -2288,13 +2490,26 @@
                   const snapshot = await uploadBytes(storageRef, file);
                   const downloadURL = await getDownloadURL(snapshot.ref);
 
-                  const imgHTML = `<img src="${downloadURL}" alt="Cloud Screenshot" style="max-width: 100%; border-radius: 6px; margin: 8px 0; border:1px solid rgba(255,255,255,0.1);" /><br>`;
-                  const tempDiv = document.createElement('div');
-                  tempDiv.innerHTML = imgHTML;
-                  placeholderSpan.parentNode.replaceChild(tempDiv.firstChild, placeholderSpan);
+                  const img = document.createElement('img');
+                  img.src = downloadURL;
+                  img.alt = "Screenshot";
+                  img.style.borderRadius = "6px";
+                  img.style.margin = "4px 0";
+                  img.style.border = "1px solid rgba(255,255,255,0.1)";
+
+                  if (editorId === 'entry-title' || editorId === 'dict-word') {
+                    img.style.maxHeight = "90px";
+                    img.style.maxWidth = "100%";
+                    img.style.verticalAlign = "middle";
+                  } else {
+                    img.style.maxWidth = "100%";
+                    img.style.display = "block";
+                  }
+
+                  placeholderSpan.parentNode.replaceChild(img, placeholderSpan);
                 } catch (err) {
                   console.error("Image upload failed:", err);
-                  placeholderSpan.textContent = '[Error uploading screenshot to cloud]';
+                  placeholderSpan.textContent = '[Error uploading screenshot]';
                   placeholderSpan.style.color = 'var(--stellar-rose)';
                 }
               }
