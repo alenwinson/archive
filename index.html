@@ -1332,7 +1332,31 @@
     function getReviewedDays() { return JSON.parse(localStorage.getItem(getReviewedDaysKey()) || '[]'); }
     function saveReviewedDays(days) { localStorage.setItem(getReviewedDaysKey(), JSON.stringify(days)); pushToCloud(); }
 
-    /* SANITIZER: Strip raw Angular comments & footnotes */
+    /* ================== LATEX & SYMBOL PARSER ================== */
+    function formatSymbolsAndLatex(str) {
+      if (!str) return '';
+      let clean = str;
+      
+      // Convert LaTeX text commands inside math blocks: \text{preload} -> preload
+      clean = clean.replace(/\\text\{([^}]+)\}/g, '$1');
+      
+      // Convert escaped arrow commands and shorthand syntax
+      clean = clean.replace(/\\uparrow/gi, '↑');
+      clean = clean.replace(/\\downarrow/gi, '↓');
+      clean = clean.replace(/\\rightarrow/gi, '→');
+      clean = clean.replace(/\\leftarrow/gi, '←');
+      clean = clean.replace(/\\leftrightarrow/gi, '↔');
+      clean = clean.replace(/\\up/gi, '↑');
+      clean = clean.replace(/\\down/gi, '↓');
+
+      // Unwrap LaTeX math delimiters ($...$ or $$...$$) where arrows or simple text are wrapped
+      clean = clean.replace(/\$\s*([↑↓→←↔\w\s+\-*\/=<>%]+?)\s*\$/g, '$1');
+      clean = clean.replace(/\$\$\s*([↑↓→←↔\w\s+\-*\/=<>%]+?)\s*\$\$/g, '$1');
+      
+      return clean;
+    }
+
+    /* SANITIZER: Strip raw Angular comments & footnotes + fix symbols */
     function sanitizeContent(html) {
       if (!html) return '';
       let clean = html;
@@ -1340,6 +1364,7 @@
       clean = clean.replace(/<source-footnote[\s\S]*?<\/source-footnote>/gi, '');
       clean = clean.replace(/<span\s+data-path-to-node[^>]*>([\s\S]*?)<\/span>/gi, '$1');
       clean = clean.replace(/<span\s+class="ng-[^>]*">([\s\S]*?)<\/span>/gi, '$1');
+      clean = formatSymbolsAndLatex(clean);
       return clean.trim();
     }
 
@@ -2098,7 +2123,10 @@
             <div class="quizlet-face quizlet-face-front">
               <div class="quizlet-header">
                 <span class="quizlet-face-label">// QUESTION / CONCEPT</span>
-                <div>${statusBadge}</div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  ${statusBadge}
+                  <button class="action-btn edit-btn" style="border-color:var(--starlight); color:var(--starlight); padding:3px 8px; font-weight:700;" onclick="editFromRevision(${card.id}, event)">✎ EDIT CARD</button>
+                </div>
               </div>
               <div class="quizlet-content">
                 <div>${card.title}</div>
@@ -2110,7 +2138,10 @@
             <div class="quizlet-face quizlet-face-back">
               <div class="quizlet-header">
                 <span class="quizlet-face-label" style="color:var(--aurora-green)">// HIGH-YIELD SUMMARY</span>
-                <div>${statusBadge}</div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  ${statusBadge}
+                  <button class="action-btn edit-btn" style="border-color:var(--starlight); color:var(--starlight); padding:3px 8px; font-weight:700;" onclick="editFromRevision(${card.id}, event)">✎ EDIT CARD</button>
+                </div>
               </div>
               <div class="quizlet-content" style="justify-content:flex-start;">
                 <div class="quizlet-back-text">${card.content}</div>
@@ -2132,6 +2163,23 @@
           </div>
         </div>
       `;
+    }
+
+    function editFromRevision(id, e) {
+      if (e) e.stopPropagation();
+      const entry = getAllData().find(i => i.id === id);
+      if (!entry) return;
+
+      currentCategory = entry.category || 'Medicine Concepts';
+      selectedDate = entry.date;
+
+      document.getElementById('modal-category-title').textContent = currentCategory.toUpperCase();
+      document.getElementById('modal-overlay').classList.add('active');
+      document.getElementById('difficulty-group').style.display = currentCategory === 'Medicine Concepts' ? 'block' : 'none';
+
+      switchModalMode('logger');
+      goToStep(2);
+      startEdit(id);
     }
 
     function toggleCardFlip() {
@@ -2171,12 +2219,12 @@
     window.addEventListener('keydown', (e) => {
       const revPanel = document.getElementById('view-revision');
       if (revPanel && revPanel.classList.contains('active-view') && activeDeck.length) {
-        if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && !e.target.isContentEditable) {
           e.preventDefault();
           toggleCardFlip();
-        } else if (e.code === 'ArrowRight') {
+        } else if (e.code === 'ArrowRight' && !e.target.isContentEditable) {
           navigateCard(1);
-        } else if (e.code === 'ArrowLeft') {
+        } else if (e.code === 'ArrowLeft' && !e.target.isContentEditable) {
           navigateCard(-1);
         }
       }
